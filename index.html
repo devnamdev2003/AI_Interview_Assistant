@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./js/script.js" defer></script>
+    <style>
+      .camera_view {
+        display: flex;
+        justify-content: center;
+      }
+      .recorder_video {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+      #output{
+        width: 40%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="input_box">
+      <h1>Interview Details</h1>
+      <form id="interviewForm">
+        <div>
+          <label for="jobRole">Job Role:</label>
+          <input
+            type="text"
+            id="jobRole"
+            name="jobRole"
+            value="software engineer"
+          />
+        </div>
+        <div>
+          <label for="interviewType">Interview Type:</label>
+          <select id="interviewType" name="interviewType">
+            <option value="Technical Interview" selected>
+              Technical Interview
+            </option>
+            <option value="HR Interview">HR Interview</option>
+            <option value="Personal Interview">Personal Interview</option>
+            <option value="MR Interview">MR Interview</option>
+          </select>
+        </div>
+        <div>
+          <label for="experience">Interview Type:</label>
+          <select id="experience" name="experience">
+            <option value="Fresher" selected>Fresher</option>
+            <option value="1 tp 2 YEAR">1 tp 2 year</option>
+            <option value="2 tp 3 YEAR">2 to 3 year</option>
+            <option value="3 tp 5 YEAR">3 to 5 year</option>
+          </select>
+        </div>
+      </form>
+      <br />
+      <button type="button" onclick="genrate_question()">
+        Start Interview
+      </button>
+
+      <div id="displayInterviewQuestion" style="display: none">
+        <h2>Interview Question:</h2>
+        <p><span id="displayQuestion"></span></p>
+      </div>
+    </div>
+
+    <div id="record_box">
+      <h1>Video Recorder</h1>
+      <div class="control_btn">
+        <button id="startCamera">Start Camera</button>
+        <button id="stopCamera" disabled>Stop Camera</button>
+        <button id="startRecording" disabled>Start Recording</button>
+        <button id="stopRecording" disabled>Stop Recording</button>
+      </div>
+      <div class="recorder_video">
+        <div id="output"></div>
+        <div id="output_v" style="display: none"></div>
+        <video id="videoElement" autoplay style="display: none"></video>
+      </div>
+      <div class="control_btn">
+        <button onclick="try_again()" style="display: none" id="delbtn">
+          Try Again
+        </button>
+        <button
+          onclick="next_question()"
+          style="display: none"
+          id="nextquestion"
+        >
+          Next question
+        </button>
+      </div>
+      <!-- <div class="camera_view">
+        <video id="videoElement" autoplay style="display: none"></video>
+      </div> -->
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+  </body>
+</html>

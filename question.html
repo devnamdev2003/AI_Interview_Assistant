@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interview Assistant</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="./js/api_calling_script.js" defer></script>
+    <style>
+      .camera_view {
+        display: flex;
+        justify-content: center;
+      }
+
+      .recorder_video {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      #output {
+        width: 40%;
+      }
+      #input_field {
+        margin: 0px 10px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div id="input_box" class="mt-5">
+            <h1 class="text-center">Interview Details</h1>
+            <form id="interviewForm">
+              <div id="input_field" class="form-group">
+                <label for="jobRole">Job Role:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="jobRole"
+                  name="jobRole"
+                  value="Software Engineer"
+                />
+              </div>
+              <div id="input_field" class="form-group">
+                <label for="interviewType">Interview Type:</label>
+                <select
+                  class="form-control"
+                  id="interviewType"
+                  name="interviewType"
+                >
+                  <option value="Technical Interview" selected>
+                    Technical Interview
+                  </option>
+                  <option value="HR Interview">HR Interview</option>
+                  <option value="Personal Interview">Personal Interview</option>
+                  <option value="MR Interview">MR Interview</option>
+                  <option value="Friendly Interview">Friendly Interview</option>
+                </select>
+              </div>
+              <div id="input_field" class="form-group">
+                <label for="experience">Experience:</label>
+                <select class="form-control" id="experience" name="experience">
+                  <option value="Fresher" selected>Fresher</option>
+                  <option value="0 to 1 YEAR">0 to 1 year</option>
+                  <option value="1 to 2 YEARS">1 to 2 years</option>
+                  <option value="2 to 3 YEARS">2 to 3 years</option>
+                  <option value="3 to 4 YEARS">3 to 4 years</option>
+                  <option value="More than 5 YEARS">More than 5 years</option>
+                </select>
+              </div>
+            </form>
+            <br />
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="genrate_question()"
+            >
+              Start Interview
+            </button>
+            <div
+              id="displayInterviewQuestion"
+              class="mt-4"
+              style="display: none"
+            >
+              <h2>Interview Question:</h2>
+              <p><span id="displayQuestion"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

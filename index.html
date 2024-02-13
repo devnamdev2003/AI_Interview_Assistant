@@ -3,100 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Interview Assistant</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <script src="./js/script.js" defer></script>
     <style>
       .camera_view {
         display: flex;
         justify-content: center;
       }
+
       .recorder_video {
         display: flex;
         flex-direction: row;
         justify-content: center;
       }
+
       #output {
         width: 40%;
+      }
+      #input_field {
+        margin: 0px 10px;
+        display: inline-block;
       }
     </style>
   </head>
   <body>
-    <div id="input_box">
-      <h1>Interview Details</h1>
-      <form id="interviewForm">
-        <div>
-          <label for="jobRole">Job Role:</label>
-          <input
-            type="text"
-            id="jobRole"
-            name="jobRole"
-            value="software engineer"
-          />
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div id="input_box" class="mt-5">
+            <h1 class="text-center">Interview Details</h1>
+            <form id="interviewForm">
+              <div id="input_field" class="form-group">
+                <label for="jobRole">Job Role:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="jobRole"
+                  name="jobRole"
+                  value="Software Engineer"
+                />
+              </div>
+              <div id="input_field" class="form-group">
+                <label for="interviewType">Interview Type:</label>
+                <select
+                  class="form-control"
+                  id="interviewType"
+                  name="interviewType"
+                >
+                  <option value="Technical Interview" selected>
+                    Technical Interview
+                  </option>
+                  <option value="HR Interview">HR Interview</option>
+                  <option value="Personal Interview">Personal Interview</option>
+                  <option value="MR Interview">MR Interview</option>
+                  <option value="Friendly Interview">Friendly Interview</option>
+                </select>
+              </div>
+              <div id="input_field" class="form-group">
+                <label for="experience">Experience:</label>
+                <select class="form-control" id="experience" name="experience">
+                  <option value="Fresher" selected>Fresher</option>
+                  <option value="0 to 1 YEAR">0 to 1 year</option>
+                  <option value="1 to 2 YEARS">1 to 2 years</option>
+                  <option value="2 to 3 YEARS">2 to 3 years</option>
+                  <option value="3 to 4 YEARS">3 to 4 years</option>
+                  <option value="More than 5 YEARS">More than 5 years</option>
+                </select>
+              </div>
+            </form>
+            <br />
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="genrate_question()"
+            >
+              Start Interview
+            </button>
+            <div
+              id="displayInterviewQuestion"
+              class="mt-4"
+              style="display: none"
+            >
+              <h2>Interview Question:</h2>
+              <p><span id="displayQuestion"></span></p>
+            </div>
+          </div>
+          <br>
+          <div class="control_btn">
+            <button id="startCamera" class="btn btn-secondary">
+              Start Camera
+            </button>
+            <button id="stopCamera" class="btn btn-secondary" disabled>
+              Stop Camera
+            </button>
+            <button id="startRecording" class="btn btn-primary" disabled>
+              Start Recording
+            </button>
+            <button id="stopRecording" class="btn btn-danger" disabled>
+              Stop Recording
+            </button>
+            <br>
+            <button
+              onclick="try_again()"
+              class="btn btn-warning"
+              style="display: none"
+              id="delbtn"
+            >
+              Try Again
+            </button>
+            <button
+              onclick="next_question()"
+              class="btn btn-primary"
+              style="display: none"
+              id="nextquestion"
+            >
+              Next question
+            </button>
+          </div>
         </div>
-        <div>
-          <label for="interviewType">Interview Type:</label>
-          <select id="interviewType" name="interviewType">
-            <option value="Technical Interview" selected>
-              Technical Interview
-            </option>
-            <option value="HR Interview">HR Interview</option>
-            <option value="Personal Interview">Personal Interview</option>
-            <option value="MR Interview">MR Interview</option>
-          </select>
-        </div>
-        <div>
-          <label for="experience">Interview Type:</label>
-          <select id="experience" name="experience">
-            <option value="Fresher" selected>Fresher</option>
-            <option value="0 tp 1 YEAR">0 tp 1 year</option>
-            <option value="1 tp 2 YEAR">1 to 2 year</option>
-            <option value="2 tp 3 YEAR">2 to 3 year</option>
-            <option value="3 tp 4 YEAR">3 to 4 year</option>
-            <option value="More then 5 YEAR">More then 5 YEAR</option>
-          </select>
-        </div>
-      </form>
-      <br />
-      <button type="button" onclick="genrate_question()">
-        Start Interview
-      </button>
-
-      <div id="displayInterviewQuestion" style="display: none">
-        <h2>Interview Question:</h2>
-        <p><span id="displayQuestion"></span></p>
       </div>
     </div>
-
-    <div id="record_box">
-      <h1>Video Recorder</h1>
-      <div class="control_btn">
-        <button id="startCamera">Start Camera</button>
-        <button id="stopCamera" disabled>Stop Camera</button>
-        <button id="startRecording" disabled>Start Recording</button>
-        <button id="stopRecording" disabled>Stop Recording</button>
-      </div>
-      <div class="recorder_video">
+    <div id="record_box" class="mt-5">
+      <div class="recorder_video mt-3">
         <div id="output"></div>
         <div id="output_v" style="display: none"></div>
         <video id="videoElement" autoplay style="display: none"></video>
       </div>
-      <div class="control_btn">
-        <button onclick="try_again()" style="display: none" id="delbtn">
-          Try Again
-        </button>
-        <button
-          onclick="next_question()"
-          style="display: none"
-          id="nextquestion"
-        >
-          Next question
-        </button>
-      </div>
-      <!-- <div class="camera_view">
-        <video id="videoElement" autoplay style="display: none"></video>
-      </div> -->
     </div>
-
+    <br />
+    <br />
     <br />
     <br />
     <br />

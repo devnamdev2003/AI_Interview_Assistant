@@ -164,9 +164,9 @@ stopRecordingButton.addEventListener("click", () => {
     if (mediaRecorder && mediaRecorder.state !== "inactive") {
         mediaRecorder.stop();
     }
-    delbtn.style.display = "block";
+    delbtn.style.display = "inline-block";
     outputDiv_v.style.display = "block";
-    nextbtn.style.display = "block";
+    nextbtn.style.display = "inline-block";
     if (mediaStream) {
         mediaStream.getTracks().forEach((track) => track.stop());
         videoElement.srcObject = null;
@@ -195,7 +195,7 @@ function next_question() {
     nextbtn.style.display = "none";
     startCameraButton.click();
     ai_question = ai_question.includes(":") ? ai_question.split(':')[1] : ai_question
-    user_message = `Job role: ${jobRole}\nInterview type: ${interviewType}\nExperience: ${experience}\nPrevious Question: ${ai_question}\nInterviewer's answer to previous question: ${result}\n\nNow ask the next question as per your choice and continue the conversation. `;
+    user_message = `Job role: ${jobRole}\nInterview type: ${interviewType}\nExperience: ${experience}\nPrevious Question: ${ai_question}\nAnswer to previous question: ${result}\n\nbased on the answer ask the next question and continue the conversation.`;
     console.log(user_message);
     const aiResponsePromise = get_ai_response(user_message, role);
     console.log(aiResponsePromise);

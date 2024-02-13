@@ -6,7 +6,7 @@ let user_message = "";
 let ai_question = ""
 
 function get_ai_response(mess, role = "you are a helpful assistant") {
-    const endpoint = "http://127.0.0.1:8000";
+    const endpoint = "https://chatgptapi-2pc2.onrender.com/";
     const requestData = {
         model_role: role,
         user_message: mess,

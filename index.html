@@ -7,8 +7,7 @@
     <!-- Bootstrap CSS -->
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <script src="./js/script.js" defer></script>
     <style>
       .camera_view {
@@ -45,16 +44,14 @@
                   class="form-control"
                   id="jobRole"
                   name="jobRole"
-                  value="Software Engineer"
-                />
+                  value="Software Engineer" />
               </div>
               <div id="input_field" class="form-group">
                 <label for="interviewType">Interview Type:</label>
                 <select
                   class="form-control"
                   id="interviewType"
-                  name="interviewType"
-                >
+                  name="interviewType">
                   <option value="Technical Interview" selected>
                     Technical Interview
                   </option>
@@ -80,15 +77,13 @@
             <button
               type="button"
               class="btn btn-primary"
-              onclick="genrate_question()"
-            >
+              onclick="genrate_question()">
               Start Interview
             </button>
             <div
               id="displayInterviewQuestion"
               class="mt-4"
-              style="display: none"
-            >
+              style="display: none">
               <h2>Interview Question:</h2>
               <p><span id="displayQuestion"></span></p>
             </div>
@@ -112,16 +107,14 @@
               onclick="try_again()"
               class="btn btn-warning"
               style="display: none"
-              id="delbtn"
-            >
+              id="delbtn">
               Try Again
             </button>
             <button
               onclick="next_question()"
               class="btn btn-primary"
               style="display: none"
-              id="nextquestion"
-            >
+              id="nextquestion">
               Next question
             </button>
           </div>
@@ -143,5 +136,9 @@
     <br />
     <br />
     <br />
+    <script>
+      const myVar = process.env.DEV_KEY;
+console.log(myVar); 
+    </script>
   </body>
 </html>

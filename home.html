@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Loading Page</title>
+        <style>
+        /* Styles for loader */
+        .loader {
+            width: 100px;
+            height: 100px;
+            margin: auto;
+            position: absolute;
+            top: 0; bottom: 0; left: 0; right: 0;
+        }
+        .content {
+            display: none;
+            text-align: center;
+            padding-top: 50px;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="loader">
+            <img id="loader" src="./load.gif" alt="Loading...">
+        </div>
+        <div class="content">
+            <h1>Your Content Goes Here</h1>
+        </div>
+
+        <script>
+        const payloadData = {
+            model_role: "helpful assistant",
+            user_message: "hi"
+        };
+        fetch('https://chatgptapi-2pc2.onrender.com/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payloadData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.answer) {
+                document.querySelector('.content').style.display = 'block';
+                document.querySelector('.content').innerHTML = data.answer;
+                document.getElementById('loader').style.display = 'none';
+            } else {
+                console.log('HTML page loading not required.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    </script>
+    </body>
+</html>

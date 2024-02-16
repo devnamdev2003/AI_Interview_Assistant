@@ -1,15 +1,58 @@
-let jobRole = ""
-let interviewType = ""
-let experience = ""
+var urlParams = new URLSearchParams(window.location.search);
+let QA = []
+let interviewData = {
+    "name": urlParams.get('name'),
+    "jobRole": urlParams.get('jobRole'),
+    "interviewType": urlParams.get('interviewType'),
+    "experience": urlParams.get('experience'),
+
+}
+
+// QA.push(
+//     {
+//         "question": "What is Excel used for?",
+//         "answer": "Excel is a spreadsheet program used for data organization, analysis, and visualization."
+//     },
+//     {
+//         "question": "Explain the difference between a workbook and a worksheet.",
+//         "answer": "A workbook is a spreadsheet program file that you create in Excel. A workbook contains one or more worksheets. A worksheet consists of cells in which you can enter and calculate data. The cells are organized into columns and rows."
+//     },
+//     {
+//         "question": "How do you navigate between worksheets in a workbook?",
+//         "answer": "Use sheet tabs at the bottom of the Excel window."
+//     },
+//     {
+//         "question": "How do you reference a cell in a formula?",
+//         "answer": "Use the cell address in the formula (for example, A1)."
+//     },
+//     {
+//         "question": "Explain the difference between relative and absolute cell references.",
+//         "answer": "When a formula is copied, relative references change, while absolute references remain constant."
+//     },
+//     {
+//         "question": "What is the order of operations in Excel formulas?",
+//         "answer": "Parentheses, Exponents, Multiplication and Division (left to right), Addition and Subtraction (left to right)."
+//     },
+//     {
+//         "question": "How do you create a chart in Excel?",
+//         "answer": "Select data, go to the 'Insert' tab, and choose a chart type."
+//     })
+console.log(interviewData);
+let can_name = interviewData.name
+let jobRole = interviewData.jobRole
+let interviewType = interviewData.interviewType;
+let experience = interviewData.experience;
 let role = "You are the interviewer, and you will ask a one questions based on the proposed job role, experience level, and type of interview.";
 let user_message = "";
 let ai_question = ""
 
+
 function get_ai_response(mess, role = "you are a helpful assistant") {
-    const endpoint = "https://chatgptapi-2pc2.onrender.com/";
+    const endpoint = "https://chatgptapi-2pc2.onrender.com";
     const requestData = {
         model_role: role,
         user_message: mess,
+        key: "dev@2003",
     };
     const fetchOptions = {
         method: "POST",
@@ -27,6 +70,8 @@ function get_ai_response(mess, role = "you are a helpful assistant") {
             return response.json();
         })
         .then((data) => {
+            document.getElementById('main_content').style.display = 'block';
+            document.getElementById('loader').style.display = 'none';
             return data.answer;
         })
         .catch((error) => {
@@ -40,10 +85,7 @@ function get_ai_response(mess, role = "you are a helpful assistant") {
 
 function genrate_question() {
     startCameraButton.click();
-    jobRole = document.getElementById("jobRole").value;
-    interviewType = document.getElementById('interviewType').value;
-    experience = document.getElementById('experience').value;
-    user_message = `Job role: ${jobRole}\nInterview type: ${interviewType}\nExperience: ${experience}`
+    user_message = `Name of candidate: ${can_name}\nJob role: ${jobRole}\nInterview type: ${interviewType}\nExperience: ${experience}`
     console.log(user_message);
     const aiResponsePromise = get_ai_response(user_message, role);
     console.log(aiResponsePromise);
@@ -62,6 +104,7 @@ function genrate_question() {
             console.error("Error:", error);
         });
 }
+
 
 const startCameraButton = document.getElementById("startCamera");
 const stopCameraButton = document.getElementById("stopCamera");
@@ -195,6 +238,10 @@ function next_question() {
     nextbtn.style.display = "none";
     startCameraButton.click();
     ai_question = ai_question.includes(":") ? ai_question.split(':')[1] : ai_question
+    QA.push({
+        "question": ai_question,
+        "answer": result
+    })
     user_message = `Job role: ${jobRole}\nInterview type: ${interviewType}\nExperience: ${experience}\nPrevious Question: ${ai_question}\nAnswer to previous question: ${result}\n\nbased on the answer ask the next question and continue the conversation.`;
     console.log(user_message);
     const aiResponsePromise = get_ai_response(user_message, role);
@@ -214,3 +261,35 @@ function next_question() {
             console.error("Error:", error);
         });
 }
+
+
+if (!interviewData.name || !interviewData.jobRole || !interviewData.interviewType || !interviewData.experience) {
+    alert("Please go to the form page and fill out the details first.");
+    window.location.href = 'index.html';
+} else {
+    genrate_question();
+
+}
+
+
+let EndInterview = document.getElementById("EndInterview");
+EndInterview.addEventListener("click", function () {
+    console.log("end");
+    if (QA.length === 0) {
+        let confirmation = confirm("You have not provided any answers. Press OK to continue.");
+        if (confirmation === true) {
+            window.location.href = "./result.html";
+        }
+    }
+    else {
+        let confirmation = confirm("Are you sure you want to end the interview?");
+        if (confirmation === true) {
+            // Serialize QA array and interviewData object
+            const serializedQA = JSON.stringify(QA);
+            const serializedInterviewData = JSON.stringify(interviewData);
+
+            // Construct the URL with both serialized data
+            window.location.href = `./result.html?data=${encodeURIComponent(serializedQA)}&interviewData=${encodeURIComponent(serializedInterviewData)}`;
+        }
+    }
+});

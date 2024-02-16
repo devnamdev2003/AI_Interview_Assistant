@@ -1,144 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interview Assistant</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet" />
-    <script src="./js/script.js" defer></script>
-    <style>
-      .camera_view {
-        display: flex;
-        justify-content: center;
-      }
-
-      .recorder_video {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-      }
-
-      #output {
-        width: 40%;
-      }
-      #input_field {
-        margin: 0px 10px;
-        display: inline-block;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6 offset-md-3">
-          <div id="input_box" class="mt-5">
-            <h1 class="text-center">Interview Details</h1>
-            <form id="interviewForm">
-              <div id="input_field" class="form-group">
-                <label for="jobRole">Job Role:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="jobRole"
-                  name="jobRole"
-                  value="Software Engineer" />
-              </div>
-              <div id="input_field" class="form-group">
-                <label for="interviewType">Interview Type:</label>
-                <select
-                  class="form-control"
-                  id="interviewType"
-                  name="interviewType">
-                  <option value="Technical Interview" selected>
-                    Technical Interview
-                  </option>
-                  <option value="HR Interview">HR Interview</option>
-                  <option value="Personal Interview">Personal Interview</option>
-                  <option value="MR Interview">MR Interview</option>
-                  <option value="Friendly Interview">Friendly Interview</option>
-                </select>
-              </div>
-              <div id="input_field" class="form-group">
-                <label for="experience">Experience:</label>
-                <select class="form-control" id="experience" name="experience">
-                  <option value="Fresher" selected>Fresher</option>
-                  <option value="0 to 1 YEAR">0 to 1 year</option>
-                  <option value="1 to 2 YEARS">1 to 2 years</option>
-                  <option value="2 to 3 YEARS">2 to 3 years</option>
-                  <option value="3 to 4 YEARS">3 to 4 years</option>
-                  <option value="More than 5 YEARS">More than 5 years</option>
-                </select>
-              </div>
-            </form>
-            <br />
-            <button
-              type="button"
-              class="btn btn-primary"
-              onclick="genrate_question()">
-              Start Interview
-            </button>
-            <div
-              id="displayInterviewQuestion"
-              class="mt-4"
-              style="display: none">
-              <h2>Interview Question:</h2>
-              <p><span id="displayQuestion"></span></p>
-            </div>
-          </div>
-          <br>
-          <div class="control_btn">
-            <button id="startCamera" class="btn btn-secondary">
-              Start Camera
-            </button>
-            <button id="stopCamera" class="btn btn-secondary" disabled>
-              Stop Camera
-            </button>
-            <button id="startRecording" class="btn btn-primary" disabled>
-              Start Recording
-            </button>
-            <button id="stopRecording" class="btn btn-danger" disabled>
-              Stop Recording
-            </button>
-            <br>
-            <button
-              onclick="try_again()"
-              class="btn btn-warning"
-              style="display: none"
-              id="delbtn">
-              Try Again
-            </button>
-            <button
-              onclick="next_question()"
-              class="btn btn-primary"
-              style="display: none"
-              id="nextquestion">
-              Next question
-            </button>
-          </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>interviewmate</title>
+        <link rel="stylesheet" href="./css/index.css">
+        <link
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet">
+        <script src="./js/index.js" defer></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <style>
+                .content {
+                    display: none;
+                }
+            </style>
+    </head>
+    <body>
+        <div class="loader" id="loader">
+            <div class="inner one"></div>
+            <div class="inner two"></div>
+            <div class="inner three"></div>
         </div>
-      </div>
-    </div>
-    <div id="record_box" class="mt-5">
-      <div class="recorder_video mt-3">
-        <div id="output"></div>
-        <div id="output_v" style="display: none"></div>
-        <video id="videoElement" autoplay style="display: none"></video>
-      </div>
-    </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <script>
-      const myVar = process.env.DEV_KEY;
-console.log(myVar); 
-    </script>
-  </body>
+        <div class="content">
+            <h1 class="heading"
+                style="text-align:center; margin-top:10px;">Interviewmate</h1>
+            <div class="container mt-5">
+                <form id="interviewForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name"
+                            placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobRole">Job Role</label>
+                        <input type="text" class="form-control" id="jobRole"
+                            placeholder="Enter your job role" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="interviewType">Interview Type</label>
+                        <select class="form-control" id="interviewType"
+                            required>
+                            <option>HR Interview</option>
+                            <option>Personal Interview</option>
+                            <option>Technical Interview</option>
+                            <option>Friendly Interview</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Experience</label>
+                        <select class="form-control" id="experience" required>
+                            <option>Fresher</option>
+                            <option>0 to 1 year</option>
+                            <option>1 to 2 years</option>
+                            <option>2 to 3 years</option>
+                            <option>3 to 4 years</option>
+                            <option>4 to 5 years</option>
+                            <option>More than 5 years</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Start
+                        Interview</button>
+                </form>
+            </div>
+        </div>
+
+    </body>
 </html>

@@ -92,7 +92,7 @@ function genrate_question() {
     aiResponsePromise
         .then((answer) => {
             ai_question = answer
-            document.getElementById("displayQuestion").textContent = answer;
+            document.getElementById("displayQuestion").innerHTML = marked.parse(answer);
             document.getElementById("displayInterviewQuestion").style.display =
                 "block";
             console.log(ai_question);
@@ -249,7 +249,7 @@ function next_question() {
     aiResponsePromise
         .then((answer) => {
             ai_question = answer
-            document.getElementById("displayQuestion").textContent = answer;
+            document.getElementById("displayQuestion").innerHTML = marked.parse(answer);
             document.getElementById("displayInterviewQuestion").style.display =
                 "block";
             console.log(ai_question);

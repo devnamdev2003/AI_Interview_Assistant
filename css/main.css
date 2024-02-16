@@ -8,7 +8,6 @@
 }
 
 .bold {
-    font-weight: 600;
     text-transform: capitalize;
 }
 
@@ -88,8 +87,8 @@ div.text_top {
 
 div.text_top p {
     text-align: justify;
-    font-size: 2rem;
-    line-height: 3rem;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
 }
 
 div.text_middle {

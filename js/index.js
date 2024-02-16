@@ -20,22 +20,16 @@ $(document).ready(function () {
             '&experience=' + encodeURIComponent(experience);
     });
 });
-const payloadData = {
-    model_role: "helpful assistant",
-    user_message: "hi",
-    key: "dev@2003"
-};
 fetch('https://chatgptapi-2pc2.onrender.com', {
-    method: 'POST',
+    method: 'GET',
     headers: {
         'Content-Type': 'application/json'
     },
-    body: JSON.stringify(payloadData)
 })
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        if (data.answer) {
+        if (data) {
             document.querySelector('.content').style.display = 'block';
             document.getElementById('loader').style.display = 'none';
         } else {

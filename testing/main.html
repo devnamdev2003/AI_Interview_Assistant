@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>interviewmate</title>
+        <link rel="stylesheet" href="./css/main.css">
+        <link rel="stylesheet" href="./css/index.css">
+        <script src="./js/main.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+        <style>
+            .main_body{
+                display: none;
+            }
+
+    </style>
+    </head>
+    <body>
+        <div class="loader" id="loader">
+            <div class="inner one"></div>
+            <div class="inner two"></div>
+            <div class="inner three"></div>
+        </div>
+        <div class="main_body" id="main_content">
+            <div class="home-container">
+                <div class="heading_box">
+                    <h1 class="heading_text">
+                        <span>Interview</span>
+                    </h1>
+                </div>
+                <br>
+                <div class="middle_box home-mainbox">
+                    <div class="text_box">
+                        <div class="text_top">
+                            <p class="question_p" id="displayInterviewQuestion"
+                                style="display: none">
+                                <span class="bold" id="displayQuestion"></span>
+                            </p>
+                        </div>
+                        <div class="text_middle">
+                            <p class="voice_text " id="output"></p>
+                        </div>
+                        <div class="text_bottom">
+                            <button type="button" onclick="try_again()"
+                                style="display: none"
+                                id="delbtn" class="btn">Try Again</button>
+                            <button type="button" onclick="next_question()"
+                                style="display: none"
+                                id="nextquestion" class="btn">Next
+                                question</button>
+                        </div>
+                    </div>
+                    <div class="video_box">
+                        <div class="v_top ">
+                            <button type="button" class="btn"
+                                id="startCamera">Start
+                                Camera</button>
+                            <button type="button" class="btn" id="stopCamera"
+                                disabled>stop
+                                camera</button>
+                        </div>
+                        <div class="camera">
+                            <div class="video_view" id="output_v"
+                                style="display: none"></div>
+                            <video class="video_view" id="videoElement" autoplay
+                                style="display: none"></video>
+                        </div>
+                        <div class="v_bottom">
+                            <button type="button" id="startRecording"
+                                class="btn"
+                                disabled>Start Recording</button>
+                            <button type="button" id="stopRecording" class="btn"
+                                disabled>Stop
+                                Recording</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="end_box">
+                    <button type="button" class="btn" id="EndInterview">end
+                        interview</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

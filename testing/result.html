@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Interview Result</title>
+        <script src="./js/result.js" defer></script>
+        <link rel="stylesheet" href="./css/index.css">
+        <script
+            src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet">
+        <style>
+                .loader{
+                    display: none;
+                }
+                .end_btn{
+                    display: flex;
+                    justify-content:center ;
+
+                }
+    
+        </style>
+    </head>
+    <body>
+        <div class="loader" id="loader">
+            <div class="inner one"></div>
+            <div class="inner two"></div>
+            <div class="inner three"></div>
+        </div>
+        <div class="container mt-5" id="main_content">
+            <h1 style="text-align: center;">Interview Result</h1>
+            <div class="mt-4">
+                <h2>Interview Details:</h2>
+                <p><strong>Name:</strong> <span id="name"></span></p>
+                <p><strong>Job Role:</strong> <span id="jobRole"></span></p>
+                <p><strong>Interview Type:</strong> <span
+                        id="interviewType"></span></p>
+                <p><strong>Experience:</strong> <span
+                        id="experience"></span></p>
+                <hr>
+                <h2>Questions and Answers:</h2>
+                <ul class="list-group" id="qaList">
+                    <!-- JavaScript will populate this list with questions and answers -->
+                </ul>
+                <p id="errorMessage" class="text-danger"
+                    style="display: none;">You have not provided any answers.
+                    Please start again.</p>
+            </div>
+            <br>
+            <div>
+                <p id="ai_response"></p>
+            </div>
+            <br>
+            <div class="end_btn">
+                <button class="btn-primary " id="generate_feedback"
+                    style="display:none;">Generate result</button>
+                <br>
+                <a href="./index.html" target="_self">
+                    <button class="btn-primary " id="start_again"
+                        style="display:none;">Start again</button>
+                </a>
+            </div>
+            <br>
+            <br>
+        </div>
+    </body>
+</html>

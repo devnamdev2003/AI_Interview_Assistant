@@ -48,7 +48,7 @@ let ai_question = ""
 
 
 function get_ai_response(mess, role = "you are a helpful assistant") {
-    const endpoint = "https://chatgptapi-2pc2.onrender.com";
+    const endpoint = "http://127.0.0.1:8000/";
     const requestData = {
         model_role: role,
         user_message: mess,
@@ -238,7 +238,9 @@ function next_question() {
     nextbtn.style.display = "none";
     startCameraButton.click();
     ai_question = ai_question.includes(":") ? ai_question.split(':')[1] : ai_question
+    console.log(ai_question);
     ai_question = ai_question.includes("\n") ? ai_question.replace(/\n/g, '') : ai_question
+    console.log(ai_question);
     QA.push({
         "question": ai_question,
         "answer": result

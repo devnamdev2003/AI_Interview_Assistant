@@ -91,7 +91,7 @@ function genrate_question() {
     aiResponsePromise
         .then((answer) => {
             ai_question = answer
-            document.getElementById("displayQuestion").innerHTML = marked.parse(answer);
+            document.getElementById("displayQuestion").textContent = answer;
             document.getElementById("displayInterviewQuestion").style.display =
                 "block";
             console.log(ai_question);
@@ -237,7 +237,6 @@ function next_question() {
     nextbtn.style.display = "none";
     startCameraButton.click();
     ai_question = ai_question.includes(":") ? ai_question.split(':')[1] : ai_question
-    ai_question = ai_question.includes("\n") ? ai_question.replace(/\n/g, '') : ai_question
     QA.push({
         "question": ai_question,
         "answer": result
@@ -249,7 +248,7 @@ function next_question() {
     aiResponsePromise
         .then((answer) => {
             ai_question = answer
-            document.getElementById("displayQuestion").innerHTML = marked.parse(answer);
+            document.getElementById("displayQuestion").textContent = answer;
             document.getElementById("displayInterviewQuestion").style.display =
                 "block";
             console.log(ai_question);

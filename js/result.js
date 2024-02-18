@@ -4,6 +4,7 @@ function get_ai_response(mess, role = "you are a helpful assistant") {
     const requestData = {
         model_role: role,
         user_message: mess,
+        ai:'google',
     };
     const fetchOptions = {
         method: "POST",

@@ -8,6 +8,7 @@
 }
 
 .bold {
+    font-weight: 800;
     text-transform: capitalize;
 }
 

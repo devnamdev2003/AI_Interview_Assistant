@@ -7,6 +7,8 @@ let interviewData = {
     "experience": urlParams.get('experience'),
 
 }
+let question_no_count = 0;
+let question_no = document.getElementById("question_no");
 
 // QA.push(
 //     {
@@ -71,6 +73,8 @@ function get_ai_response(mess, role = "you are a helpful assistant") {
         .then((data) => {
             document.getElementById('main_content').style.display = 'block';
             document.getElementById('loader').style.display = 'none';
+            question_no_count += 1;
+            question_no.innerText = question_no_count + ". ";
             return data.answer;
         })
         .catch((error) => {
@@ -91,7 +95,7 @@ function genrate_question() {
     aiResponsePromise
         .then((answer) => {
             ai_question = answer
-            document.getElementById("displayQuestion").innerHTML = marked.parse(answer);
+            document.getElementById("displayQuestion").innerHTML = answer;
             document.getElementById("displayInterviewQuestion").style.display =
                 "block";
             console.log(ai_question);
@@ -215,6 +219,10 @@ stopRecordingButton.addEventListener("click", () => {
         videoElement.style.display = "none";
     }
     mediaStream = null;
+    QA.push({
+        "question": ai_question,
+        "answer": result
+    })
     startRecordingButton.disabled = true;
     stopCameraButton.disabled = true;
     stopRecordingButton.disabled = true;
@@ -237,11 +245,13 @@ function next_question() {
     nextbtn.style.display = "none";
     startCameraButton.click();
     ai_question = ai_question.includes(":") ? ai_question.split(':')[1] : ai_question
+    console.log(ai_question);
     ai_question = ai_question.includes("\n") ? ai_question.replace(/\n/g, '') : ai_question
-    QA.push({
-        "question": ai_question,
-        "answer": result
-    })
+    console.log(ai_question);
+    // QA.push({
+    //     "question": ai_question,
+    //     "answer": result
+    // })
     user_message = `Job role: ${jobRole}\nInterview type: ${interviewType}\nExperience: ${experience}\nPrevious Question: ${ai_question}\nAnswer to previous question: ${result}\n\nbased on the answer ask the next question and continue the conversation.`;
     console.log(user_message);
     const aiResponsePromise = get_ai_response(user_message, role);
@@ -249,7 +259,7 @@ function next_question() {
     aiResponsePromise
         .then((answer) => {
             ai_question = answer
-            document.getElementById("displayQuestion").innerHTML = marked.parse(answer);
+            document.getElementById("displayQuestion").innerHTML = answer;
             document.getElementById("displayInterviewQuestion").style.display =
                 "block";
             console.log(ai_question);

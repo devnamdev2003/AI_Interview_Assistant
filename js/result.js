@@ -54,7 +54,7 @@ function generate_feedback() {
     aiResponsePromise
         .then((answer) => {
             ai_answer = answer
-            console.log(ai_answer);
+            // console.log(ai_answer);
             document.getElementById("ai_response").innerHTML = marked.parse(ai_answer);
 
         })

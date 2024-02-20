@@ -99,9 +99,13 @@ function genrate_question() {
             document.getElementById("displayInterviewQuestion").style.display =
                 "block";
             console.log(ai_question);
-            const speechSynthesis = window.speechSynthesis;
-            const utterance = new SpeechSynthesisUtterance(answer);
-            speechSynthesis.speak(utterance);
+            var speech = new SpeechSynthesisUtterance();
+            speech.text = answer;
+            var selectedVoice = "Microsoft Neerja Online (Natural) - English (India) (Preview)";
+            if (selectedVoice) {
+                speech.voice = speechSynthesis.getVoices().filter(function (voice) { return voice.name == selectedVoice; })[0];
+            }
+            window.speechSynthesis.speak(speech);
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -263,9 +267,13 @@ function next_question() {
             document.getElementById("displayInterviewQuestion").style.display =
                 "block";
             console.log(ai_question);
-            const speechSynthesis = window.speechSynthesis;
-            const utterance = new SpeechSynthesisUtterance(answer);
-            speechSynthesis.speak(utterance);
+            var speech = new SpeechSynthesisUtterance();
+            speech.text = answer;
+            var selectedVoice = "Microsoft Neerja Online (Natural) - English (India) (Preview)";
+            if (selectedVoice) {
+                speech.voice = speechSynthesis.getVoices().filter(function (voice) { return voice.name == selectedVoice; })[0];
+            }
+            window.speechSynthesis.speak(speech);
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -302,4 +310,10 @@ EndInterview.addEventListener("click", function () {
             window.location.href = `./result.html?data=${encodeURIComponent(serializedQA)}&interviewData=${encodeURIComponent(serializedInterviewData)}`;
         }
     }
+});
+
+window.addEventListener('load', function () {
+    var welcomeText = "";
+    var welcomeSpeech = new SpeechSynthesisUtterance(welcomeText);
+    window.speechSynthesis.speak(welcomeSpeech);
 });

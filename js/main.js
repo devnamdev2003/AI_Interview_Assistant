@@ -39,7 +39,7 @@ let question_no = document.getElementById("question_no");
 //         "question": "How do you create a chart in Excel?",
 //         "answer": "Select data, go to the 'Insert' tab, and choose a chart type."
 //     })
-console.log(interviewData);
+// console.log(interviewData);
 let can_name = interviewData.name
 let jobRole = interviewData.jobRole
 let interviewType = interviewData.interviewType;
@@ -89,16 +89,16 @@ function get_ai_response(mess, role = "you are a helpful assistant") {
 function genrate_question() {
     startCameraButton.click();
     user_message = `Name of candidate: ${can_name}\nJob role: ${jobRole}\nInterview type: ${interviewType}\nExperience: ${experience}`
-    console.log(user_message);
+    // console.log(user_message);
     const aiResponsePromise = get_ai_response(user_message, role);
-    console.log(aiResponsePromise);
+    // console.log(aiResponsePromise);
     aiResponsePromise
         .then((answer) => {
             ai_question = answer
             document.getElementById("displayQuestion").innerHTML = answer;
             document.getElementById("displayInterviewQuestion").style.display =
                 "block";
-            console.log(ai_question);
+            // console.log(ai_question);
             const speechSynthesis = window.speechSynthesis;
             const utterance = new SpeechSynthesisUtterance(answer);
             speechSynthesis.speak(utterance);
@@ -245,24 +245,24 @@ function next_question() {
     nextbtn.style.display = "none";
     startCameraButton.click();
     ai_question = ai_question.includes(":") ? ai_question.split(':')[1] : ai_question
-    console.log(ai_question);
+    // console.log(ai_question);
     ai_question = ai_question.includes("\n") ? ai_question.replace(/\n/g, '') : ai_question
-    console.log(ai_question);
+    // console.log(ai_question);
     // QA.push({
     //     "question": ai_question,
     //     "answer": result
     // })
     user_message = `Job role: ${jobRole}\nInterview type: ${interviewType}\nExperience: ${experience}\nPrevious Question: ${ai_question}\nAnswer to previous question: ${result}\n\nbased on the answer ask the next question and continue the conversation.`;
-    console.log(user_message);
+    // console.log(user_message);
     const aiResponsePromise = get_ai_response(user_message, role);
-    console.log(aiResponsePromise);
+    // console.log(aiResponsePromise);
     aiResponsePromise
         .then((answer) => {
             ai_question = answer
             document.getElementById("displayQuestion").innerHTML = answer;
             document.getElementById("displayInterviewQuestion").style.display =
                 "block";
-            console.log(ai_question);
+            // console.log(ai_question);
             const speechSynthesis = window.speechSynthesis;
             const utterance = new SpeechSynthesisUtterance(answer);
             speechSynthesis.speak(utterance);
@@ -284,7 +284,7 @@ if (!interviewData.name || !interviewData.jobRole || !interviewData.interviewTyp
 
 let EndInterview = document.getElementById("EndInterview");
 EndInterview.addEventListener("click", function () {
-    console.log("end");
+    // console.log("end");
     if (QA.length === 0) {
         let confirmation = confirm("You have not provided any answers. Press OK to continue.");
         if (confirmation === true) {

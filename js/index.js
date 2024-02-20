@@ -28,12 +28,12 @@ fetch('https://chatgptapi-2pc2.onrender.com', {
 })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data) {
             document.querySelector('.content').style.display = 'block';
             document.getElementById('loader').style.display = 'none';
         } else {
-            console.log('HTML page loading not required.');
+            // console.log('HTML page loading not required.');
         }
     })
     .catch(error => {

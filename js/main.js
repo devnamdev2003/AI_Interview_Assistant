@@ -10,36 +10,7 @@ let interviewData = {
 let question_no_count = 0;
 let question_no = document.getElementById("question_no");
 
-// QA.push(
-//     {
-//         "question": "What is Excel used for?",
-//         "answer": "Excel is a spreadsheet program used for data organization, analysis, and visualization."
-//     },
-//     {
-//         "question": "Explain the difference between a workbook and a worksheet.",
-//         "answer": "A workbook is a spreadsheet program file that you create in Excel. A workbook contains one or more worksheets. A worksheet consists of cells in which you can enter and calculate data. The cells are organized into columns and rows."
-//     },
-//     {
-//         "question": "How do you navigate between worksheets in a workbook?",
-//         "answer": "Use sheet tabs at the bottom of the Excel window."
-//     },
-//     {
-//         "question": "How do you reference a cell in a formula?",
-//         "answer": "Use the cell address in the formula (for example, A1)."
-//     },
-//     {
-//         "question": "Explain the difference between relative and absolute cell references.",
-//         "answer": "When a formula is copied, relative references change, while absolute references remain constant."
-//     },
-//     {
-//         "question": "What is the order of operations in Excel formulas?",
-//         "answer": "Parentheses, Exponents, Multiplication and Division (left to right), Addition and Subtraction (left to right)."
-//     },
-//     {
-//         "question": "How do you create a chart in Excel?",
-//         "answer": "Select data, go to the 'Insert' tab, and choose a chart type."
-//     })
-// console.log(interviewData);
+
 let can_name = interviewData.name
 let jobRole = interviewData.jobRole
 let interviewType = interviewData.interviewType;

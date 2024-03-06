@@ -4,8 +4,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY',)
-print(SECRET_KEY)
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -17,6 +16,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api',
+    'company_view',
+    'user_view',
+    'home',
     'rest_framework',
     'corsheaders',
 ]
@@ -55,16 +58,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'AIIA.wsgi.application'
 
 database_url = os.environ.get('DATABASE')
-print(database_url)
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
-    'default': dj_database_url.parse(database_url, conn_max_age=600)
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+# DATABASES = {
+#     'default': dj_database_url.parse(database_url, conn_max_age=600)
+# }
 
 
 AUTH_PASSWORD_VALIDATORS = [

@@ -27,3 +27,4 @@ dj-database-url
 whitenoise[brotli]
 djangorestframework
 djangorestframework-simplejwt
+google-generativeai

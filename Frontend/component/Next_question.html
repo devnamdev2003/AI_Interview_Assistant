@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="genrate()">press</button>
+    <div id="question_again"></div>
+  </body>
+  <script>
+    let answer =
+      'Object-oriented programming (OOP) is a programming paradigm based on the concept of "objects," which can contain data, in the form of fields or attributes, and code, in the form of procedures or methods. Objects are instances of classes, which act as blueprints for creating objects with similar properties and behaviors. OOP promotes modularity, reusability, and scalability in software development by organizing code into self-contained objects that interact with each other, encapsulating data and functionality within them. This approach enhances code readability, reduces complexity, and facilitates easier maintenance and debugging. OOP also enables the implementation of real-world concepts and relationships, making it a powerful and widely-used paradigm in software engineering.';
+    function get_ai_response(mess, role = "you are a helpful assistant") {
+      const endpoint = "http://127.0.0.1:8000";
+      const requestData = {
+        model_role: role,
+        user_message: mess,
+      };
+      const fetchOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      };
+
+      return fetch(endpoint, fetchOptions)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          return data.answer;
+        })
+        .catch((error) => {
+          console.error("There was a problem with the fetch operation:", error);
+          throw error;
+        });
+    }
+
+    function genrate() {
+      let role =
+        "You are the interviewer, and you will ask a question based on the job role offered and the type of interview";
+      let user_message = `Job role: software engineer \n\nInterview type: Technical Interview \n\n Previous Question: Can you explain the concept of object-oriented programming and why it is important in software engineering?\n\nanswer to the previous question: ${answer}\n\nNow ask the next question as per your choice and continue the conversation. `;
+      console.log(user_message);
+      const aiResponsePromise = get_ai_response(user_message, role);
+      console.log(aiResponsePromise);
+      aiResponsePromise
+        .then((answer) => {
+          document.getElementById("question_again").textContent = answer;
+          console.log(answer);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  </script>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Recorder</title>
+  </head>
+  <body>
+    <h1>Video Recorder</h1>
+    <button id="startCamera">Start Camera</button>
+    <button id="stopCamera" disabled>Stop Camera</button>
+    <button id="startRecording" disabled>Start Recording</button>
+    <button id="stopRecording" disabled>Stop Recording</button>
+    <div id="output"></div>
+    <button onclick="delete_recording()" style="display: none" id="delbtn">
+      delete
+    </button>
+    <video id="videoElement" autoplay style="display: none"></video>
+
+    <script>
+      const startCameraButton = document.getElementById("startCamera");
+      const stopCameraButton = document.getElementById("stopCamera");
+      const startRecordingButton = document.getElementById("startRecording");
+      const stopRecordingButton = document.getElementById("stopRecording");
+      const outputDiv = document.getElementById("output");
+      const videoElement = document.getElementById("videoElement");
+      const delbtn = document.getElementById("delbtn");
+      let mediaStream;
+      let mediaRecorder;
+      let chunks = [];
+
+      startCameraButton.addEventListener("click", async () => {
+        outputDiv.innerHTML = "";
+        delbtn.style.display = "none";
+        try {
+          mediaStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false,
+          });
+          videoElement.srcObject = mediaStream;
+          videoElement.style.display = "block";
+          startRecordingButton.disabled = false;
+          stopCameraButton.disabled = false;
+          startCameraButton.disabled = true;
+        } catch (error) {
+          console.error("Error accessing camera:", error);
+        }
+      });
+
+      stopCameraButton.addEventListener("click", () => {
+        if (mediaStream) {
+          mediaStream.getTracks().forEach((track) => track.stop());
+          videoElement.srcObject = null;
+          videoElement.style.display = "none";
+          startRecordingButton.disabled = true;
+          stopRecordingButton.disabled = true;
+          stopCameraButton.disabled = true;
+          startCameraButton.disabled = false;
+        }
+      });
+
+      startRecordingButton.addEventListener("click", () => {
+        navigator.mediaDevices
+          .getUserMedia({ video: true, audio: true })
+          .then((stream) => {
+            mediaStream = stream;
+            mediaRecorder = new MediaRecorder(mediaStream);
+            mediaRecorder.ondataavailable = (event) => {
+              chunks.push(event.data);
+            };
+            mediaRecorder.onstop = () => {
+              const blob = new Blob(chunks, { type: "video/webm" });
+              const videoURL = URL.createObjectURL(blob);
+              const videoElement = document.createElement("video");
+              videoElement.src = videoURL;
+              videoElement.controls = true;
+              outputDiv.innerHTML = "";
+              outputDiv.appendChild(videoElement);
+              chunks = [];
+            };
+            mediaRecorder.start();
+            startRecordingButton.disabled = true;
+            stopCameraButton.disabled = true;
+            stopRecordingButton.disabled = false;
+          })
+          .catch((error) => {
+            console.error("Error accessing microphone:", error);
+          });
+      });
+      stopRecordingButton.addEventListener("click", () => {
+        mediaRecorder.stop();
+        delbtn.style.display = "block";
+        if (mediaStream) {
+          mediaStream.getTracks().forEach((track) => track.stop());
+          videoElement.srcObject = null;
+          videoElement.style.display = "none";
+        }
+        // Reset the mediaStream variable
+        mediaStream = null;
+        startRecordingButton.disabled = true;
+        stopCameraButton.disabled = true;
+        stopRecordingButton.disabled = true;
+        startCameraButton.disabled = false;
+      });
+      function delete_recording() {
+        outputDiv.innerHTML = "";
+        delbtn.style.display = "none";
+      }
+    </script>
+  </body>
+</html>

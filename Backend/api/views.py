@@ -88,12 +88,12 @@ def user_input(request):
 def get_ai_response_openai(conversation):
     print("Received a request by openai to get AI response.")
     try:
-        completion = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=conversation
-        )
-        response_text = completion.choices[0].message.content
-        # response_text = "hi how can i help you.."
+        # completion = openai.chat.completions.create(
+        #     model="gpt-3.5-turbo",
+        #     messages=conversation
+        # )
+        # response_text = completion.choices[0].message.content
+        response_text = "hi how can i help you.."
         # time.sleep(12)
         # response_text = "hi how can i help you.."
         print("AI response received.")

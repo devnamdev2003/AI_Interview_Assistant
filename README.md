@@ -1,4 +1,4 @@
-[**Title: InterviewMate: AI-Powered Interview Assistant**](https://devnamdev2003.github.io/AI_Interview_Assistant)
+[**Title: InterviewMate: AI-Powered Interview Assistant**](https://devnamdev2003.github.io/AI_Interview_Assistant/Frontend/)
 
 **Introduction:**
 InterviewMate is an innovative AI-powered interview assistant designed to streamline the interview process for both candidates and interviewers. With its intelligent features, InterviewMate aims to assist users in preparing for, conducting, and analyzing interviews effectively. This README file provides a comprehensive guide to using InterviewMate and outlines its key features, installation instructions, usage guidelines, and contribution details.
@@ -30,8 +30,3 @@ InterviewMate is licensed under the [insert license name]. See the [LICENSE](./L
 
 **Conclusion:**
 InterviewMate revolutionizes the interview process by providing users with an intelligent assistant to prepare, conduct, and analyze interviews effectively. With its advanced features, InterviewMate aims to empower candidates to excel in their interviews and achieve their career goals.
-
-
-https://devnamdev2003.github.io/AI_Interview_Assistant/Frontend/img/share.png
-
-https://devnamdev2003.github.io/AI_Interview_Assistant/Frontend/

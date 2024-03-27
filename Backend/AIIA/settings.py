@@ -118,11 +118,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-
-print("---------------------------")
-print(EMAIL_HOST_USER)
-print(EMAIL_HOST_PASSWORD)
-print(SECRET_KEY)
-print(os.environ['GOOGLE_API_KEY'])
-print(os.getenv('OPENAI_KEY'))
-print("---------------------------")

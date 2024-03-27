@@ -1,36 +1,25 @@
-# Compiled Python files
+# Ignore Python byte code files
+__pycache__/
 *.pyc
 
-# Temporary files
-*.~*
+# Ignore environment folder
+env/
 
-# macOS-specific files
-.DS_Store
+# Ignore SQLite database file
+Backend/db.sqlite3/
 
-# Environment variables file (if you use one)
-.env
+# Ignore static files and media files (assuming they are served from the Backend app)
+Backend/static/
+Backend/media/
 
-# SQLite database file (if you use SQLite)
-db.sqlite3
-./Backend/db.sqlite3
-# Static files directory (if you collect static files locally)
-/static/
-
-# Media files directory (if you upload media files locally)
-/media/
-
-# Virtual environment directory
-venv/
-
-# IDE or text editor specific files/directories (add more if needed)
+# Ignore IDE or editor specific files
 .vscode/
 .idea/
-*.pyc
-*.pyo
-*.pyd
-*.swp
-*~
-__pycache__/
 
-# Local configuration files (modify as needed)
-local_settings.py
+# Ignore compiled JavaScript files or build artifacts (assuming they are generated in the Frontend folder)
+Frontend/dist/
+Frontend/node_modules/
+
+# Ignore any other temporary or generated files
+*.~*
+.DS_Store

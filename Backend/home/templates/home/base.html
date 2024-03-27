@@ -1,9 +1,13 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{{ title }}</title>
+    <meta charset="UTF-8" />
+    <title>
+      {% block title %}
+        AIIA
+      {% endblock %}
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="title" content="Interviewmate AI-Powered Interview Practice Platform " />
     <meta charset="utf-8" />
@@ -26,15 +30,10 @@
         cursor: pointer;
       }
     </style>
-
-    {% include 'home/component/link.html' %}
   </head>
   <body>
-    <div class="home-container">
-      {% include 'home/component/nav.html' %}
-      {% include 'home/index.html' %}
-      {% include 'home/component/footer.html' %}
-    </div>
-    <script data-section-id="navbar" src="https://unpkg.com/@teleporthq/teleport-custom-scripts"></script>
+    {% block content %}
+
+    {% endblock %}
   </body>
 </html>

@@ -7,4 +7,3 @@ read comment
 git commit -m "$comment"
 git push -u origin main
 git status
-

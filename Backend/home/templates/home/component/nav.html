@@ -10,8 +10,13 @@
         <span class="home-nav52 bodySmall">Contact</span>
       </nav>
       <div class="home-buttons">
-        <button class="home-login buttonFlat">Login</button>
-        <button class="buttonFilled">Register</button>
+        {% if user.is_authenticated %}
+          <a href="{% url 'user_dashboard' user.username %}"><button class="buttonFlat">Welcome, {{ user.username }}</button></a>
+          <a href="{% url 'logout' %}"><button class="buttonFilled">Logout</button></a>
+        {% else %}
+          <a href="{% url 'login' %}"><button class="buttonFlat">Login</button></a>
+          <a href="{% url 'register' %}"><button class="buttonFilled">Register</button></a>
+        {% endif %}
       </div>
     </div>
     <div data-thq="thq-burger-menu" class="home-burger-menu">
@@ -37,8 +42,13 @@
           <a href=""><span class="home-nav521 bodySmall">Contact</span></a>
         </nav>
         <div class="home-buttons1">
-          <button class="buttonFlat">Login</button>
-          <button class="buttonFilled">Register</button>
+          {% if user.is_authenticated %}
+            <a href="{% url 'user_dashboard' user.username %}"><button class="buttonFlat">Welcome, {{ user.username }}</button></a>
+            <a href="{% url 'logout' %}"><button class="buttonFilled">Logout</button></a>
+          {% else %}
+            <a href="{% url 'login' %}"><button class="buttonFlat">Login</button></a>
+            <a href="{% url 'register' %}"><button class="buttonFilled">Register</button></a>
+          {% endif %}
         </div>
       </div>
       <div>

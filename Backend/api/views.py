@@ -7,7 +7,7 @@ import concurrent.futures
 import time
 import google.generativeai as genai
 
-genai.configure(api_key=os.environ['GAPI_KEY'])
+genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
 openai.api_key = os.getenv('OPENAI_KEY')
 
 

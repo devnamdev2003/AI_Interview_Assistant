@@ -1,0 +1,36 @@
+# Compiled Python files
+*.pyc
+
+# Temporary files
+*.~*
+
+# macOS-specific files
+.DS_Store
+
+# Environment variables file (if you use one)
+.env
+
+# SQLite database file (if you use SQLite)
+db.sqlite3
+./Backend/db.sqlite3
+# Static files directory (if you collect static files locally)
+/static/
+
+# Media files directory (if you upload media files locally)
+/media/
+
+# Virtual environment directory
+venv/
+
+# IDE or text editor specific files/directories (add more if needed)
+.vscode/
+.idea/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*~
+__pycache__/
+
+# Local configuration files (modify as needed)
+local_settings.py

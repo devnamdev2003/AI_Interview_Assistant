@@ -267,7 +267,7 @@
       let ai_question = ''
       
       function get_ai_response(mess, role = 'you are a helpful assistant') {
-        const endpoint = 'http://127.0.0.1:8000/api/'
+        const endpoint = '/api/'
         const requestData = {
           model_role: role,
           user_message: mess,

@@ -240,6 +240,9 @@
           transform: translateX(0);
         }
       }
+      button {
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -253,7 +256,9 @@
             data-thq="thq-navbar"
             class="navbarContainer home-navbar-interactive"
           >
-            <span class="logo">Interview Mate</span>
+            <a href="https://ai-interview-assistant.onrender.com/">
+              <span class="logo">AIIA</span>
+            </a>
             <div data-thq="thq-navbar-nav" class="home-desktop-menu">
               <nav class="home-links">
                 <a href="#home-hero"><span class="bodySmall">Home</span></a>
@@ -266,11 +271,15 @@
                 <a href="#home-faq"
                   ><span class="home-nav42 bodySmall">FAQ</span></a
                 >
-                <span class="home-nav52 bodySmall">Contact</span>
+                <!-- <span class="home-nav52 bodySmall">Contact</span> -->
               </nav>
               <div class="home-buttons">
-                <button class="home-login buttonFlat">Login</button>
-                <button class="buttonFilled">Register</button>
+                <a href="https://ai-interview-assistant.onrender.com/login/">
+                  <button class="home-login buttonFilled">Login</button>
+                </a>
+                <a href="https://ai-interview-assistant.onrender.com/register/">
+                  <button class="buttonFilled">Register</button>
+                </a>
               </div>
             </div>
             <div data-thq="thq-burger-menu" class="home-burger-menu">
@@ -286,7 +295,9 @@
             >
               <div class="home-nav">
                 <div class="home-top">
-                  <span class="logo">Interview Mate</span>
+                  <a href="https://ai-interview-assistant.onrender.com/">
+                    <span class="logo">AIIA</span>
+                  </a>
                   <div data-thq="thq-close-menu" class="home-close-menu">
                     <svg
                       viewBox="0 0 1024 1024"
@@ -311,13 +322,19 @@
                   <a href="#home-fcq"
                     ><span class="home-nav421 bodySmall">FAQ</span></a
                   >
-                  <a href=""
+                  <!-- <a href=""
                     ><span class="home-nav521 bodySmall">Contact</span></a
-                  >
+                  > -->
                 </nav>
                 <div class="home-buttons1">
-                  <button class="buttonFlat">Login</button>
-                  <button class="buttonFilled">Register</button>
+                  <a href="https://ai-interview-assistant.onrender.com/login/">
+                    <button class="buttonFilled">Login</button>
+                  </a>
+                  <a
+                    href="https://ai-interview-assistant.onrender.com/register/"
+                  >
+                    <button class="buttonFilled">Register</button>
+                  </a>
                 </div>
               </div>
               <div>
@@ -382,14 +399,7 @@
                 </span>
               </span>
               <div class="home-btn-group">
-                <a
-                  href="https://devnamdev2003.github.io/AI_Interview_Assistant/Frontend/pre"
-                >
-                  <button class="buttonFilled">
-                    Try Now the Future of Interviews
-                  </button>
-                </a>
-                <!-- <button class="buttonFlat">Learn More&nbsp;→</button> -->
+                <button class="buttonFlat">Learn More&nbsp;→</button>
               </div>
             </div>
           </div>
@@ -687,11 +697,6 @@
                 era of hiring excellence.
               </span>
             </span>
-            <a
-              href="https://devnamdev2003.github.io/AI_Interview_Assistant/Frontend/pre"
-            >
-              <button class="buttonFilled">Try Now</button>
-            </a>
           </div>
         </div>
         <div class="home-faq" id="home-faq">

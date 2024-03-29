@@ -41,7 +41,11 @@
               </span>
             </span>
             <div class="home-btn-group">
-              <button class="buttonFlat">Learn More&nbsp;→</button>
+              {% if user.is_authenticated %}
+                <a href="{% url 'interview_index' %}"><button class="buttonFilled">Try Now</button></a>
+              {% else %}
+                <a href="{% url 'login' %}"><button class="buttonFilled">Try now</button></a>
+              {% endif %}
             </div>
           </div>
         </div>

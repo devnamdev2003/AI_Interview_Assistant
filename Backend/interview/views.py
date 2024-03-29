@@ -12,7 +12,7 @@ import json
 @login_required
 def index(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
+        name = request.user.username
         jobRole = request.POST.get('jobRole')
         interviewType = request.POST.get('interviewType')
         experience = request.POST.get('experience')
@@ -59,7 +59,7 @@ def schedule_interview(request):
         end_time = request.POST.get('end_time')
         unique_id = uuid.uuid4()
         ScheduleInterview.objects.create(name=name,
-                                    email=email, unique_id=unique_id, start_time=start_time, end_time=end_time)
+                                         email=email, unique_id=unique_id, start_time=start_time, end_time=end_time)
 
         unique_link = f"{settings.BASE_URL}{unique_id}/"
 

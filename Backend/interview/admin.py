@@ -1,9 +1,9 @@
 # admin.py
 
 from django.contrib import admin
-from .models import ExampleModel
+from .models import ScheduleInterview
 
 
-@admin.register(ExampleModel)
-class ExampleModelAdmin(admin.ModelAdmin):
+@admin.register(ScheduleInterview)
+class ScheduleInterviewAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'unique_id', 'created_at')

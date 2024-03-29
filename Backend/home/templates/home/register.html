@@ -92,6 +92,13 @@
         <input type="password" class="form-control" name="repassword" id="repassword" placeholder="Confirm Password" required />
         <div class="invalid-feedback" id="repasswordFeedback">Passwords do not match.</div>
       </div>
+      {% comment %} <div class="mb-3">
+        <label for="userType" class="form-label">User Type</label>
+        <select class="form-control" id="userType" required name="userType">
+          <option>normal</option>
+          <option>company</option>
+        </select>
+      </div> {% endcomment %}
       <button type="submit" class="btn btn-dark col-md-12">Register</button>
     </form>
     

@@ -4,21 +4,22 @@ import uuid
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
-from .models import ExampleModel
+from .models import ScheduleInterview
 from datetime import datetime
+import json
 
 
 @login_required
 def index(request):
     if request.method == 'POST':
         name = request.POST.get('name')
-        job_role = request.POST.get('jobRole')
-        interview_type = request.POST.get('interviewType')
+        jobRole = request.POST.get('jobRole')
+        interviewType = request.POST.get('interviewType')
         experience = request.POST.get('experience')
         request.session['data'] = {
             'name': name,
-            'job_role': job_role,
-            'interview_type': interview_type,
+            'jobRole': jobRole,
+            'interviewType': interviewType,
             'experience': experience
         }
 
@@ -29,23 +30,35 @@ def index(request):
 
 @login_required
 def interview_practice(request):
-    data = request.session.get('data', {})
-    print(data)
-    return render(request, 'interview/interview_practice.html', {'data': data})
+    interviewData = request.session.get('data', {})
+    if request.method == 'POST':
+        QA = request.POST.get('data')
+        QA = json.loads(QA)
+        if 'QA' in request.session:
+            del request.session['QA']
+        request.session['QA'] = QA
+        return redirect('interview_result')
+
+    return render(request, 'interview/interview_practice.html', {'data': interviewData})
+
+
+@login_required
+def interview_result(request):
+    interviewData = request.session.get('data', {})
+    QA = request.session.get('QA', {})
+    return render(request, 'interview/result.html', {'interviewData': interviewData, 'QA': QA})
 
 
 def schedule_interview(request):
     protocol = 'https' if request.is_secure() else 'http'
     domain = request.get_host()
-    print("Protocol:", protocol)
-    print("Domain:", domain)
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
         start_time = request.POST.get('start_time')
         end_time = request.POST.get('end_time')
         unique_id = uuid.uuid4()
-        ExampleModel.objects.create(name=name,
+        ScheduleInterview.objects.create(name=name,
                                     email=email, unique_id=unique_id, start_time=start_time, end_time=end_time)
 
         unique_link = f"{settings.BASE_URL}{unique_id}/"
@@ -79,7 +92,7 @@ def success_page(request):
 
 
 def unique_link_handler(request, unique_id):
-    instance = get_object_or_404(ExampleModel, unique_id=unique_id)
+    instance = get_object_or_404(ScheduleInterview, unique_id=unique_id)
 
     current_time = timezone.now()
     if current_time < instance.start_time:
@@ -96,6 +109,6 @@ def unique_link_handler(request, unique_id):
 
 
 def interview_page(request, unique_id):
-    instance = get_object_or_404(ExampleModel, unique_id=unique_id)
+    instance = get_object_or_404(ScheduleInterview, unique_id=unique_id)
 
     return render(request, 'interview/schedule_interview/interview_page.html', {'instance': instance, 'key': unique_id})

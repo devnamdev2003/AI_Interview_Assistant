@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interview Result</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    {% if QA %}
+      <div class="container mt-5 mb-5" id="main_content">
+        <h1 style="text-align: center;">Interview Result</h1>
+        <div class="mt-4">
+          <h2>Interview Details:</h2>
+          <p>
+            <strong>Name:</strong> {{ interviewData.name }} <span id="name"></span>
+          </p>
+          <p>
+            <strong>Job Role:</strong> {{ interviewData.jobRole }} <span id="jobRole"></span>
+          </p>
+          <p>
+            <strong>Interview Type:</strong> {{ interviewData.interviewType }} <span id="interviewType"></span>
+          </p>
+          <p>
+            <strong>Experience:</strong> {{ interviewData.experience }} <span id="experience"></span>
+          </p>
+          <hr />
+          <h2>Questions and Answers:</h2>
+          <ul class="list-group" id="qaList">
+            {% for question in QA %}
+              <li class="list-group-item">
+                <strong>Question:</strong> {{ question.question }}<br /><strong>Answer:</strong>{{ question.answer }}
+              </li>
+            {% endfor %}
+          </ul>
+          <p id="errorMessage" class="text-danger" style="display: none;">You have not provided any answers. Please start again.</p>
+        </div>
+        <div class="mt-3 mb-3">
+          <p id="ai_response"></p>
+        </div>
+        <div class="end_btn">
+          <button class="btn btn-primary col-12" id="generate_feedback">Generate result</button>
+          <a href="{% url 'interview_index' %}" target="_self" class="btn btn-success" id="start_again" style="display:none;">Start again</a>
+        </div>
+        <script>
+        function get_ai_response(mess, role = 'you are a helpful assistant') {
+          const endpoint = 'http://127.0.0.1:8000/api/'
+          const requestData = {
+            model_role: role,
+            user_message: mess,
+            ai: 'google'
+          }
+          const fetchOptions = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+          }
+        
+          return fetch(endpoint, fetchOptions)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok')
+              }
+              return response.json()
+            })
+            .then((data) => {
+              return data.answer
+            })
+            .catch((error) => {
+              console.error('There was a problem with the fetch operation:', error)
+              throw error
+            })
+        }
+        
+        let role = "As the interviewer, your role is to analyze the candidate's interview answers and generate a score out of 100 based on the quality of their responses. Additionally, you should provide feedback for each answer to help the candidate understand areas of strength and areas for improvement."
+        
+        var interviewData = {{ interviewData|safe }};
+        var QA = {{ QA|safe }};
+        
+        function generate_feedback() {
+          let ai_answer = ''
+        
+          user_message = `${JSON.stringify(interviewData)}\n${JSON.stringify(QA)}`
+        console.log(user_message);
+          const aiResponsePromise = get_ai_response(user_message, role)
+          aiResponsePromise
+            .then((answer) => {
+              ai_answer = answer
+              console.log(ai_answer)
+              document.getElementById('ai_response').innerHTML = marked.parse(ai_answer)
+            })
+            .catch((error) => {
+              console.error('Error:', error)
+            })
+        }
+        
+        let generate_result = document.getElementById('generate_feedback')
+        let start_again = document.getElementById('start_again')
+        generate_result.style.display = 'block'
+        
+        generate_result.addEventListener('click', () => {
+          generate_feedback()
+          generate_result.style.display = 'none'
+          start_again.style.display = 'block'
+        })
+      </script>
+      </div>
+    {% endif %}
+  </body>
+</html>

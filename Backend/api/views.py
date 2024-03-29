@@ -106,7 +106,7 @@ def get_ai_response_openai(conversation):
 def get_ai_response_google(conversation):
     print("Received a request by google to get AI response.")
     try:
-        text = f"{conversation[0]['content']}\n{conversation[1]['content']}"
+        text = f"{conversation[1]['content']}\n{conversation[0]['content']}"
         print(text)
         model = genai.GenerativeModel('gemini-pro')
         response = model.generate_content(text)

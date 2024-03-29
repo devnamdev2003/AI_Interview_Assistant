@@ -59,6 +59,7 @@ def user_register(request):
         phone_number = request.POST.get('phone_number')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
+        user_type = 'normal'
         data = {
             "username": username,
             "password": password,
@@ -66,6 +67,7 @@ def user_register(request):
             "phone_number": phone_number,
             "first_name": first_name,
             "last_name": last_name,
+            "user_type": user_type,
         }
         if CustomUser.objects.filter(username=username).exists():
             messages.error(request, 'Username already exists.')
@@ -80,7 +82,7 @@ def user_register(request):
 
         user = CustomUser.objects.create_user(username=username, password=password, email=email, phone_number=phone_number, first_name=first_name,
                                               last_name=last_name,
-                                              is_registered=True)
+                                              is_registered=True, user_type=user_type)
         login(request, user)
         return redirect('home_index')
     else:

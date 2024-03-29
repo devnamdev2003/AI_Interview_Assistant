@@ -11,4 +11,5 @@ urlpatterns = [
          name='unique_link_handler'),
     path('<uuid:unique_id>/interview_page',
          views.interview_page, name='interview_page'),
+    path('result/',views.interview_result,name='interview_result')
 ]

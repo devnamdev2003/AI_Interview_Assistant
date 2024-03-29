@@ -9,9 +9,97 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      .loader {
+        position: absolute;
+        top: calc(50% - 32px);
+        left: calc(50% - 32px);
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        perspective: 800px;
+      }
+      
+      .inner {
+        position: absolute;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+      
+      .inner.one {
+        left: 0%;
+        top: 0%;
+        animation: rotate-one 1s linear infinite;
+        border-bottom: 3px solid #0000fa;
+      }
+      
+      .inner.two {
+        right: 0%;
+        top: 0%;
+        animation: rotate-two 1s linear infinite;
+        border-right: 3px solid #ff4d00;
+      }
+      
+      .inner.three {
+        right: 0%;
+        bottom: 0%;
+        animation: rotate-three 1s linear infinite;
+        border-top: 3px solid #218702;
+      }
+      
+      div.loader p {
+        position: relative;
+        font-weight: 600;
+        letter-spacing: 1px;
+        top: 80px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      
+      @keyframes rotate-one {
+        0% {
+          transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+        }
+      
+        100% {
+          transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+        }
+      }
+      
+      @keyframes rotate-two {
+        0% {
+          transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+        }
+      
+        100% {
+          transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+        }
+      }
+      
+      @keyframes rotate-three {
+        0% {
+          transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+        }
+      
+        100% {
+          transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+        }
+      }
+      .loader {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     {% if QA %}
+      <div class="loader" id="loader">
+        <div class="inner one"></div>
+        <div class="inner two"></div>
+        <div class="inner three"></div>
+        <p>Loading..</p>
+      </div>
       <div class="container mt-5 mb-5" id="main_content">
         <h1 style="text-align: center;">Interview Result</h1>
         <div class="mt-4">
@@ -46,7 +134,8 @@
           <button class="btn btn-primary col-12" id="generate_feedback">Generate result</button>
           <a href="{% url 'interview_index' %}" target="_self" class="btn btn-success" id="start_again" style="display:none;">Start again</a>
         </div>
-        <script>
+      </div>
+      <script>
         function get_ai_response(mess, role = 'you are a helpful assistant') {
           const endpoint = '/api/'
           const requestData = {
@@ -82,11 +171,14 @@
         
         var interviewData = {{ interviewData|safe }};
         var QA = {{ QA|safe }};
-        
+        let generate_result = document.getElementById('generate_feedback')
+        let loading = document.getElementById('loader')
+        let main_content = document.getElementById('main_content')
+        let start_again = document.getElementById('start_again')
         function generate_feedback() {
           let ai_answer = ''
         
-          user_message = `${JSON.stringify(interviewData)}\n${JSON.stringify(QA)}`
+        user_message = `${JSON.stringify(interviewData)}\n${JSON.stringify(QA)}`
         console.log(user_message);
           const aiResponsePromise = get_ai_response(user_message, role)
           aiResponsePromise
@@ -94,23 +186,27 @@
               ai_answer = answer
               console.log(ai_answer)
               document.getElementById('ai_response').innerHTML = marked.parse(ai_answer)
+              start_again.style.display = 'block'
+              main_content.style.display = 'block'
+              loading.style.display = 'none'
+
             })
             .catch((error) => {
               console.error('Error:', error)
             })
         }
         
-        let generate_result = document.getElementById('generate_feedback')
-        let start_again = document.getElementById('start_again')
+
         generate_result.style.display = 'block'
         
         generate_result.addEventListener('click', () => {
           generate_feedback()
           generate_result.style.display = 'none'
-          start_again.style.display = 'block'
+          loading.style.display = 'block'
+          main_content.style.display = 'none'
+
         })
       </script>
-      </div>
     {% endif %}
   </body>
 </html>

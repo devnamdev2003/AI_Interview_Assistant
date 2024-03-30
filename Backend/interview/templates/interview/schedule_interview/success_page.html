@@ -29,8 +29,15 @@
     <div id="content" class="col-md-8 mx-auto">
       <h1 class="text-center mb-4">Success!</h1>
 
-      <p class="lead">An email with further instructions has been sent to your email address.</p>
+      <p class="lead">
+        An email has been sent to given email address. <a href="{% url 'home_index' %}">home</a>
+      </p>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+    <script>
+      if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href)
+      }
+    </script>
   </body>
 </html>

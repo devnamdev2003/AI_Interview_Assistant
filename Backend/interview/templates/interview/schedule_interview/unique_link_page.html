@@ -17,13 +17,16 @@
           <h5 class="card-title">Interview Details</h5>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              <span style="font-weight: 600;">Start Time:</span>{{ instance.start_time }}
+              <span style="font-weight: 600;">Start Time:</span> {{ instance.start_time }}
             </li>
             <li class="list-group-item">
-              <span style="font-weight: 600;">End Time:</span>{{ instance.end_time }}
+              <span style="font-weight: 600;">End Time:</span> {{ instance.end_time }}
+            </li>
+            <li class="list-group-item">
+              <span style="font-weight: 600;">Email:</span> {{ instance.email }}
             </li>
             <li class="list-group-item mb-3">
-              <span style="font-weight: 600;">Email:</span>{{ instance.email }}
+              <span style="font-weight: 600;">Job Role:</span> {{ instance.job_role }}
             </li>
             {% if message %}
               {% if message.after %}
@@ -31,6 +34,9 @@
               {% endif %}
               {% if message.before %}
                 <div class="alert alert-info alert-dismissable" role="alert">This interview session has not started yet. Please come back at the scheduled time. If you have any questions, feel free to contact us at contact@aiia.com</div>
+              {% endif %}
+              {% if message.done %}
+                <div class="alert alert-info alert-dismissable" role="alert">{{ message.done }}</div>
               {% endif %}
             {% else %}
               <li class="list-group-item d-flex justify-content-center">

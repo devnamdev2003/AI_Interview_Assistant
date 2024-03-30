@@ -48,12 +48,17 @@
               <li class="list-group-item">
                 <strong>Phone Number:</strong> {{ user.phone_number }}
               </li>
+              {% if user.is_authenticated and user.user_type == 'company' %}
+
+              {% endif %}
             </ul>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <a href="{% url 'home_index' %}" class="btn btn-primary me-md-2 mb-2 mb-md-0">Home</a>
               <a href="{% url 'update_user_details' %}" class="btn btn-secondary me-md-2 mb-2 mb-md-0">Edit Profile</a>
               <a href="{% url 'interview_index' %}" class="btn btn-success">Take Interview</a>
-              {% comment %} <a href="{% url 'schedule_interview' %}" class="btn btn-success">Schedule your interview</a> {% endcomment %}
+              {% if user.is_authenticated and user.user_type == 'company' %}
+                <a href="{% url 'schedule_interview' %}" class="btn btn-success">Schedule your interview</a>
+              {% endif %}
             </div>
           </div>
         </div>

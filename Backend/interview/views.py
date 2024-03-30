@@ -4,9 +4,10 @@ import uuid
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
-from .models import ScheduleInterview
+from .models import ScheduleInterview, InterviewModel
 from datetime import datetime
 import json
+from django.urls import reverse
 
 
 @login_required
@@ -58,8 +59,12 @@ def schedule_interview(request):
         start_time = request.POST.get('start_time')
         end_time = request.POST.get('end_time')
         unique_id = uuid.uuid4()
+        job_role = request.POST.get('jobRole')
+        interview_type = request.POST.get('interviewType')
+        experience = request.POST.get('experience')
+
         ScheduleInterview.objects.create(name=name,
-                                         email=email, unique_id=unique_id, start_time=start_time, end_time=end_time)
+                                         email=email, unique_id=unique_id, start_time=start_time, end_time=end_time, job_role=job_role, interview_type=interview_type, experience=experience)
 
         unique_link = f"{settings.BASE_URL}{unique_id}/"
 
@@ -69,7 +74,7 @@ def schedule_interview(request):
         end_time = datetime.strptime(end_time, '%Y-%m-%dT%H:%M')
 
         email_body = f"Dear {name},\n\n" \
-            f"We are pleased to invite you to an interview for the position you applied for. " \
+            f"We are pleased to invite you to an interview for the {job_role} you applied for. " \
             f"Please find below the details:\n\n" \
             f"Interview Link: {protocol}://{domain}{unique_link}\n" \
             f"Interview Date: {start_time.strftime('%Y-%m-%d %H:%M')} to {end_time.strftime('%Y-%m-%d %H:%M')}\n\n" \
@@ -103,6 +108,10 @@ def unique_link_handler(request, unique_id):
         message = {
             "after": "The link has expired."
         }
+    elif instance.interview_completed:
+        message = {
+            'done': "You are already given the interview"
+        }
     else:
         message = None
     return render(request, 'interview/schedule_interview/unique_link_page.html', {'instance': instance, 'message': message})
@@ -110,5 +119,30 @@ def unique_link_handler(request, unique_id):
 
 def interview_page(request, unique_id):
     instance = get_object_or_404(ScheduleInterview, unique_id=unique_id)
+    data = {
+        'name': instance.name,
+        'jobRole': instance.job_role,
+        'interviewType': instance.interview_type,
+        'experience': instance.experience
+    }
+    if instance.interview_completed:
+        return redirect(reverse('unique_link_handler', kwargs={'unique_id': instance.unique_id},))
 
-    return render(request, 'interview/schedule_interview/interview_page.html', {'instance': instance, 'key': unique_id})
+    if request.method == 'POST':
+        instance.interview_completed = True
+        instance.save()
+        qa = request.POST.get('data')
+        userdata = f"jobRole: {instance.job_role},interviewType: {
+            instance.interview_type},experience: {instance.experience}"
+        email = instance.email
+        interview = InterviewModel.objects.create(
+            userdata=userdata,
+            email=email,
+            qa=qa
+        )
+        return render(request, 'interview/schedule_interview/result.html')
+    return render(request, 'interview/schedule_interview/interview_page.html', {'instance': instance, 'key': unique_id, 'data': data})
+
+
+def sinterview_result(request):
+    return render(request, 'interview/schedule_interview/result.html')

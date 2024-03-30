@@ -4,6 +4,203 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>interviewmate</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+      
+      * {
+        margin: 0%;
+        padding: 0%;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+      }
+      
+      .bold {
+        font-weight: 800;
+        text-transform: capitalize;
+      }
+      
+      :root {
+        scroll-behavior: smooth;
+        font-size: 62.5%;
+      }
+      
+      a {
+        text-decoration: none;
+        color: #000;
+      }
+      
+      button[disabled] {
+        cursor: not-allowed;
+      }
+      
+      div.home-container {
+        width: 100%;
+        height: auto;
+      }
+      
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      
+      div.heading_box {
+        /* border: 2px solid black; */
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      h1.heading_text {
+        height: auto;
+        text-align: center;
+        font-size: 5em;
+        /* border: 2px solid black; */
+      }
+      
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      
+      div.middle_box {
+        width: 96%;
+        height: 500px;
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        /* border: 2px solid black; */
+      }
+      
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      
+      div.text_box {
+        width: 63%;
+        display: flex;
+        flex-direction: column;
+        /* border: 2px solid rgb(213, 29, 29); */
+      }
+      
+      div.text_top {
+        overflow: auto;
+        width: 100%;
+        height: 20%;
+        border-bottom: 2px solid black;
+      }
+      
+      div.text_top p {
+        text-align: justify;
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+      }
+      
+      div.text_middle {
+        overflow: auto;
+        width: 100%;
+        height: 65%;
+        border-bottom: 2px solid black;
+        padding: 15px 10px 15px 0px;
+      }
+      
+      div.text_middle p {
+        text-align: justify;
+        font-size: 2rem;
+        line-height: 3rem;
+      }
+      
+      div.text_bottom {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        height: 15%;
+        /* border: 2px solid black; */
+      }
+      
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      
+      div.video_box {
+        width: 35%;
+        display: flex;
+        flex-direction: column;
+        /* border: 2px solid rgb(21, 255, 0); */
+      }
+      
+      div.v_top {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        height: 15%;
+        /* border: 2px solid black; */
+      }
+      
+      div.camera {
+        width: 100%;
+        height: 70%;
+        /* border: 5px solid rgb(15, 0, 227); */
+        /* overflow: hidden; */
+        display: flex;
+        align-items: center;
+      }
+      
+      div.camera video {
+        width: 100%;
+      }
+      
+      .video_view {
+        width: 100%;
+        /* height: 100%; */
+      }
+      
+      div.v_bottom {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 15%;
+        /* border: 2px solid black; */
+      }
+      
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      
+      .btn {
+        display: inline-block;
+        font-size: 1.5rem;
+        border-radius: 10px;
+        text-transform: capitalize;
+        text-align: center;
+        padding: 7px 30px;
+        outline: none;
+        cursor: pointer;
+      }
+      
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      /* -------------------------------------- */
+      
+      div.end_box {
+        /* border: 2px solid black; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
   </head>
   <body>
     <div class="main_body" id="main_content">
@@ -46,7 +243,274 @@
         <div class="end_box">
           <button type="button" class="btn" id="EndInterview">end interview</button>
         </div>
+        <form id="data-form" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="data" id="data-field" />
+        </form>
       </div>
     </div>
+    <script>
+      let QA = []
+      
+      let interviewData = {{ data|safe }};
+      let question_no_count = 0
+      let question_no = document.getElementById('question_no')
+      console.log(interviewData);
+      let user_name = interviewData.name
+      let jobRole = interviewData.jobRole
+      let interviewType = interviewData.interviewType
+      let experience = interviewData.experience
+
+      let role = 'You are the interviewer, and you will ask a one questions in 30 words based on the proposed job role, experience level, and type of interview.'
+
+      let user_message = ''
+      let ai_question = ''
+      
+      function get_ai_response(mess, role = 'you are a helpful assistant') {
+        const endpoint = '/api/'
+        const requestData = {
+          model_role: role,
+          user_message: mess,
+          ai: 'google'
+        }
+        const fetchOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestData)
+        }
+      
+        return fetch(endpoint, fetchOptions)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok')
+            }
+            return response.json()
+          })
+          .then((data) => {
+            question_no_count += 1
+            question_no.innerText = question_no_count + '. '
+            return data.answer
+          })
+          .catch((error) => {
+            console.error('There was a problem with the fetch operation:', error)
+            throw error
+          })
+      }
+      
+      function genrate_question() {
+        startCameraButton.click()
+
+        user_message = `Name of candidate: ${user_name}\nJob role: ${jobRole}\nInterview type: ${interviewType}\nExperience: ${experience}`
+
+        const aiResponsePromise = get_ai_response(user_message, role)
+        aiResponsePromise
+          .then((answer) => {
+            ai_question = answer
+            document.getElementById('displayQuestion').innerHTML = answer
+            document.getElementById('displayInterviewQuestion').style.display = 'block'
+            var speech = new SpeechSynthesisUtterance()
+            speech.text = answer
+            var selectedVoice = 'Microsoft Neerja Online (Natural) - English (India) (Preview)'
+            if (selectedVoice) {
+              speech.voice = speechSynthesis.getVoices().filter(function (voice) {
+                return voice.name == selectedVoice
+              })[0]
+            }
+            window.speechSynthesis.speak(speech)
+          })
+          .catch((error) => {
+            console.error('Error:', error)
+          })
+      }
+      
+      const startCameraButton = document.getElementById('startCamera')
+      const stopCameraButton = document.getElementById('stopCamera')
+      const startRecordingButton = document.getElementById('startRecording')
+      const stopRecordingButton = document.getElementById('stopRecording')
+      const outputDiv = document.getElementById('output')
+      const outputDiv_v = document.getElementById('output_v')
+      const videoElement = document.getElementById('videoElement')
+      const delbtn = document.getElementById('delbtn')
+      const nextbtn = document.getElementById('nextquestion')
+      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+      const recognition = new SpeechRecognition()
+      recognition.interimResults = true
+      recognition.continuous = true
+      let result = ''
+      let mediaStream
+      let mediaRecorder
+      let chunks = []
+      
+      startCameraButton.addEventListener('click', async () => {
+        outputDiv.innerHTML = ''
+        outputDiv_v.innerHTML = ''
+        outputDiv_v.style.display = 'none'
+      
+        delbtn.style.display = 'none'
+        nextbtn.style.display = 'none'
+        try {
+          mediaStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false
+          })
+          videoElement.srcObject = mediaStream
+          videoElement.style.display = 'block'
+          startRecordingButton.disabled = false
+          stopCameraButton.disabled = false
+          startCameraButton.disabled = true
+        } catch (error) {
+          console.error('Error accessing camera:', error)
+        }
+      })
+      
+      stopCameraButton.addEventListener('click', () => {
+        if (mediaStream) {
+          mediaStream.getTracks().forEach((track) => track.stop())
+          videoElement.srcObject = null
+          videoElement.style.display = 'none'
+          startRecordingButton.disabled = true
+          stopRecordingButton.disabled = true
+          stopCameraButton.disabled = true
+          startCameraButton.disabled = false
+        }
+      })
+      
+      startRecordingButton.addEventListener('click', () => {
+        outputDiv_v.style.display = 'none'
+        result = ''
+        navigator.mediaDevices
+          .getUserMedia({ video: true, audio: true })
+          .then((stream) => {
+            recognition.start()
+            mediaStream = stream
+            mediaRecorder = new MediaRecorder(mediaStream)
+            mediaRecorder.ondataavailable = (event) => {
+              chunks.push(event.data)
+            }
+            mediaRecorder.onstop = () => {
+              const blob_v = new Blob(chunks, { type: 'video/webm' })
+              const videoURL = URL.createObjectURL(blob_v)
+              const videoElement = document.createElement('video')
+              videoElement.src = videoURL
+              videoElement.controls = true
+              outputDiv_v.innerHTML = ''
+              outputDiv_v.appendChild(videoElement)
+              chunks = []
+            }
+            mediaRecorder.start()
+            startRecordingButton.disabled = true
+            stopCameraButton.disabled = true
+            stopRecordingButton.disabled = false
+          })
+          .catch((error) => {
+            console.error('Error accessing microphone:', error)
+          })
+      })
+      recognition.addEventListener('result', (e) => {
+        const text = Array.from(e.results)
+          .map((result) => result[0])
+          .map((result) => result.transcript)
+          .join('')
+        outputDiv.innerText = text
+      })
+      
+      recognition.onerror = (event) => {
+        console.log('Error occurred in recognition: ' + event.error)
+      }
+      
+      stopRecordingButton.addEventListener('click', () => {
+        recognition.stop()
+        result = outputDiv.innerText
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+          mediaRecorder.stop()
+        }
+        delbtn.style.display = 'inline-block'
+        outputDiv_v.style.display = 'block'
+        nextbtn.style.display = 'inline-block'
+        if (mediaStream) {
+          mediaStream.getTracks().forEach((track) => track.stop())
+          videoElement.srcObject = null
+          videoElement.style.display = 'none'
+        }
+        mediaStream = null
+        QA.push({
+          question: ai_question,
+          answer: result
+        })
+        startRecordingButton.disabled = true
+        stopCameraButton.disabled = true
+        stopRecordingButton.disabled = true
+        startCameraButton.disabled = true
+      })
+      
+      function try_again() {
+        QA.pop()
+        startCameraButton.disabled = false
+        startCameraButton.click()
+        outputDiv.innerHTML = ''
+        outputDiv_v.innerHTML = ''
+        delbtn.style.display = 'none'
+        nextbtn.style.display = 'none'
+      }
+      
+      function next_question() {
+        if (result.length < 5) {
+          alert('You have not provided any answers. Press OK to continue.')
+          QA.pop()
+        }
+        startCameraButton.disabled = false
+        outputDiv.innerHTML = ''
+        outputDiv_v.innerHTML = ''
+        delbtn.style.display = 'none'
+        nextbtn.style.display = 'none'
+        startCameraButton.click()
+        ai_question = ai_question.includes(':') ? ai_question.split(':')[1] : ai_question
+        ai_question = ai_question.includes('\n') ? ai_question.replace(/\n/g, '') : ai_question
+        user_message = `Job role: ${jobRole}\nInterview type: ${interviewType}\nExperience: ${experience}\nPrevious Question: ${ai_question}\nAnswer to previous question: ${result}\n\n`
+        role=`You are the interviewer, and you will ask a one questions in 30 words based on the proposed job role, experience level, type of interview and answers. ask the next question and continue the conversation.`
+        const aiResponsePromise = get_ai_response(user_message, role)
+        aiResponsePromise
+          .then((answer) => {
+            ai_question = answer
+            document.getElementById('displayQuestion').innerHTML = answer
+            document.getElementById('displayInterviewQuestion').style.display = 'block'
+            var speech = new SpeechSynthesisUtterance()
+            speech.text = answer
+            var selectedVoice = 'Microsoft Neerja Online (Natural) - English (India) (Preview)'
+            if (selectedVoice) {
+              speech.voice = speechSynthesis.getVoices().filter(function (voice) {
+                return voice.name == selectedVoice
+              })[0]
+            }
+            window.speechSynthesis.speak(speech)
+          })
+          .catch((error) => {
+            console.error('Error:', error)
+          })
+      }
+      
+
+      let EndInterview = document.getElementById('EndInterview')
+      EndInterview.addEventListener('click', function () {
+          let confirmation = confirm('Are you sure you want to end the interview?')
+          if (confirmation === true) {
+            var dataToSend = JSON.stringify(QA); 
+            document.getElementById('data-field').value = dataToSend; 
+            console.log(dataToSend);
+            document.getElementById('data-form').submit();
+          
+        }
+      })
+      
+      window.addEventListener('load', function () {
+        var welcomeText = ''
+        var welcomeSpeech = new SpeechSynthesisUtterance(welcomeText)
+        window.speechSynthesis.speak(welcomeSpeech)
+        genrate_question() 
+
+      })
+    </script>
   </body>
 </html>

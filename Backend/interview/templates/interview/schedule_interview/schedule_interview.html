@@ -46,6 +46,35 @@
           <label for="end_time" class="form-label">End Time:</label>
           <input type="datetime-local" id="end_time" name="end_time" class="form-control" required />
         </div>
+        {% comment %} <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name" required />
+        </div> {% endcomment %}
+        <div class="mb-3">
+          <label for="jobRole" class="form-label">Job Role</label>
+          <input type="text" class="form-control" id="jobRole" placeholder="Enter your job role" required name="jobRole" />
+        </div>
+        <div class="mb-3">
+          <label for="interviewType" class="form-label">Interview Type</label>
+          <select class="form-control" id="interviewType" required name="interviewType">
+            <option>HR Interview</option>
+            <option>Personal Interview</option>
+            <option>Technical Interview</option>
+            <option>Friendly Interview</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="experience" class="form-label">Experience</label>
+          <select class="form-control" id="experience" required name="experience">
+            <option>Fresher</option>
+            <option>0 to 1 year</option>
+            <option>1 to 2 years</option>
+            <option>2 to 3 years</option>
+            <option>3 to 4 years</option>
+            <option>4 to 5 years</option>
+            <option>More than 5 years</option>
+          </select>
+        </div>
         <button type="submit" class="btn btn-dark col-md-12" id="reset">Submit</button>
       </form>
     </div>

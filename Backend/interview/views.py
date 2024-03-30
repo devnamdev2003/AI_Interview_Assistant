@@ -132,8 +132,7 @@ def interview_page(request, unique_id):
         instance.interview_completed = True
         instance.save()
         qa = request.POST.get('data')
-        userdata = f"jobRole: {instance.job_role},interviewType: {
-            instance.interview_type},experience: {instance.experience}"
+        userdata = instance.job_role
         email = instance.email
         interview = InterviewModel.objects.create(
             userdata=userdata,

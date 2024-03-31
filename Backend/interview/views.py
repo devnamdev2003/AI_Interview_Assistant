@@ -68,18 +68,12 @@ def schedule_interview(request):
 
         unique_link = f"{settings.BASE_URL}{unique_id}/"
 
-        subject = 'Invitation to Interview'
+        subject = f'Invitation to Interview: {job_role}'
         from_email = 'carrer@aiia.com'
         start_time = datetime.strptime(start_time, '%Y-%m-%dT%H:%M')
         end_time = datetime.strptime(end_time, '%Y-%m-%dT%H:%M')
 
-        email_body = f"Dear {name},\n\n" \
-            f"We are pleased to invite you to an interview for the {job_role} you applied for. " \
-            f"Please find below the details:\n\n" \
-            f"Interview Link: {protocol}://{domain}{unique_link}\n" \
-            f"Interview Date: {start_time.strftime('%Y-%m-%d %H:%M')} to {end_time.strftime('%Y-%m-%d %H:%M')}\n\n" \
-            f"Thank you for your interest. We look forward to meeting you!\n\n" \
-            f"Best regards,\n AIIA"
+        email_body = f"\nDear {name},\n\nWe are pleased to inform you that your application for the {job_role} position at AIIA has been considered, and we would like to invite you for an interview. Your qualifications and experiences are impressive, and we believe you could be a valuable addition to our team.\n\nPlease find below the details for your interview:\n\nInterview Link: {protocol}://{domain}{unique_link}\n\nInterview Date: {start_time.strftime('%Y-%m-%d %H:%M')} to {end_time.strftime('%Y-%m-%d %H:%M')}\n\nWe appreciate your interest in joining AIIA, and we eagerly anticipate the opportunity to discuss your application further. Should you have any questions or require additional information before the interview, please feel free to contact us.\n\nThank you for considering a career with AIIA, and we look forward to meeting with you soon.\n\nBest regards,\nAIIA\n{protocol}://{domain}"
 
         send_mail(
             subject,

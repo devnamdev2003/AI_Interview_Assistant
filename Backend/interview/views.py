@@ -80,8 +80,7 @@ def schedule_interview(request):
         interview_type = request.POST.get('interviewType')
         experience = request.POST.get('experience')
         scheduled_by = request.user.username
-        interview_link = f"{
-            protocol}://{domain}{settings.BASE_URL}{unique_id}/"
+        interview_link = f"{protocol}://{domain}{settings.BASE_URL}{unique_id}/"
 
         ScheduleInterview.objects.create(name=name,
                                          email=email, unique_id=unique_id, start_time=start_time, end_time=end_time, job_role=job_role, interview_type=interview_type, experience=experience, scheduled_by=scheduled_by, interview_link=interview_link)

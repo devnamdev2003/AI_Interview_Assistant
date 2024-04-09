@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    {% for item in Interviews %}
+      {{ item.email }} <br />
+      {{ item.ScheduleID }} <br />
+      {{ item.job_role }} <br />
+      <p id="qa"> {{ item.qa }}</p>
+      {{ item.is_scheduled }}
+      <p id="result">{{ item.result }}</p>
+      <hr>
+    {% endfor %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        let result = document.getElementById('result')
+        let re = result.innerText
+        re = re.replace(/\\n/g, '\n')
+        result.innerHTML = marked.parse(re)
+        let qa = document.getElementById('qa')
+        let dataArray = JSON.parse(qa.innerText);
+        qa.innerHTML=""
+        dataArray.forEach(function(item, index) {
+            console.log("Question " + (index + 1) + ": " + item.question);
+            console.log("Answer " + (index + 1) + ": " + item.answer);
+            qa.innerHTML+=`<li class="list-group-item"><strong>Question:</strong> ${item.question}<br /><strong>Answer:</strong>${item.answer}</li>`
+          });
+      })
+    </script>
+  </body>
+</html>

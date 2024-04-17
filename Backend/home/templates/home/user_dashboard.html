@@ -57,7 +57,6 @@
               {% if user.is_authenticated and user.user_type == 'company' %}
                 <a href="{% url 'schedule_interview' %}" class="btn btn-warning me-md-2 mb-2 mb-md-0">Schedule interview</a>
                 <a href="{% url 'schedule_interview_list' %}" class="btn btn-info me-md-2 mb-2 mb-md-0">Schedule interview list</a>
-                <a href="/dev" class="btn btn-info me-md-2 mb-2 mb-md-0">Admin</a>
               {% endif %}
             </div>
           </div>

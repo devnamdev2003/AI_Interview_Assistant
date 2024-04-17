@@ -59,7 +59,7 @@ def user_register(request):
         phone_number = request.POST.get('phone_number')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        user_type = 'normal'
+        user_type = request.POST.get('userType')
         data = {
             "username": username,
             "password": password,

@@ -1,25 +1,50 @@
-# Ignore Python byte code files
+# Ignore virtual environment
+venv/
+venv/*
+
+# Python bytecode
+*.py[cod]
 __pycache__/
+
+# Django stuff
+*.log
+*.pot
 *.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
 
-# Ignore environment folder
-env/
+# Migrations
+*/migrations/*.py
+*/migrations/*.pyc
 
-# Ignore SQLite database file
-Backend/db.sqlite3/
+# Environment variables
+.env
 
-# Ignore static files and media files (assuming they are served from the Backend app)
-Backend/static/
-Backend/media/
+# Static and media files (if not managed by version control)
+staticfiles/
+media/
 
-# Ignore IDE or editor specific files
+# Ignore coverage and testing files
+htmlcov/
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+*.pid
+*.seed
+*.manifest
+*.lock
+
+# Ignore IDE/editor settings
 .vscode/
 .idea/
+*.swp
+*.swo
+*.swn
 
-# Ignore compiled JavaScript files or build artifacts (assuming they are generated in the Frontend folder)
-Frontend/dist/
-Frontend/node_modules/
-
-# Ignore any other temporary or generated files
-*.~*
+# Ignore MacOS system files
 .DS_Store

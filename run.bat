@@ -4,7 +4,7 @@ setlocal
 rem Set paths
 
 set "project_directory=%CD%"
-set "venv_directory=%project_directory%\env"
+set "venv_directory=%project_directory%\venv"
 
 
 rem Check if virtual environment exists
@@ -31,7 +31,7 @@ if exist "%venv_directory%\Scripts\activate.bat" (
 
 echo "project started..."
 rem Run Django development server in background
-start "Django Server" /B  python .\Backend\manage.py runserver
+start "Django Server" /B  python .\manage.py runserver
 
 rem Wait for a short time to ensure the server is up and running
 timeout /t 10

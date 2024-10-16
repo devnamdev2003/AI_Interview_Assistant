@@ -4,7 +4,7 @@ import uuid
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
-from .models import ScheduleInterview, InterviewModel
+from .models import scheduleInterviewModel, interviewModel
 from datetime import datetime
 import json
 from django.urls import reverse
@@ -61,7 +61,7 @@ def interview_result(request):
 
 @login_required
 def schedule_interview_list(request):
-    Interviews = InterviewModel.objects.all()
+    Interviews = interviewModel.InterviewModel.objects.all()
     return render(request, 'interview/schedule_interview/schedule_interview_list.html', {'Interviews': Interviews})
     
 
@@ -82,7 +82,7 @@ def schedule_interview(request):
         scheduled_by = request.user.username
         interview_link = f"{protocol}://{domain}{settings.BASE_URL}{unique_id}/"
 
-        ScheduleInterview.objects.create(name=name,
+        scheduleInterviewModel.ScheduleInterview.objects.create(name=name,
                                          email=email, unique_id=unique_id, start_time=start_time, end_time=end_time, job_role=job_role, interview_type=interview_type, experience=experience, scheduled_by=scheduled_by, interview_link=interview_link)
 
         unique_link = f"{settings.BASE_URL}{unique_id}/"
@@ -104,7 +104,7 @@ def success_page(request):
 
 
 def unique_link_handler(request, unique_id):
-    instance = get_object_or_404(ScheduleInterview, unique_id=unique_id)
+    instance = get_object_or_404(scheduleInterviewModel.ScheduleInterview, unique_id=unique_id)
 
     current_time = timezone.now()
     if current_time < instance.start_time:
@@ -125,7 +125,7 @@ def unique_link_handler(request, unique_id):
 
 
 def interview_page(request, unique_id):
-    instance = get_object_or_404(ScheduleInterview, unique_id=unique_id)
+    instance = get_object_or_404(scheduleInterviewModel.ScheduleInterview, unique_id=unique_id)
     data = {
         'name': instance.name,
         'jobRole': instance.job_role,
@@ -141,7 +141,7 @@ def interview_page(request, unique_id):
         qa = request.POST.get('data')
         job_role = instance.job_role
         email = instance.email
-        interview = InterviewModel.objects.create(
+        interview = interviewModel.InterviewModel.objects.create(
             job_role=job_role,
             email=email,
             qa=qa,

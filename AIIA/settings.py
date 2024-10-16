@@ -20,9 +20,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'interview',
-    'home',
     'rest_framework',
     'corsheaders',
+    'accounts',
 ]
 
 
@@ -58,10 +58,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AIIA.wsgi.application'
 
-database_url = Config.DATABASE
 
 DATABASES = {
-    'default': dj_database_url.parse(database_url, conn_max_age=600)
+    'default': dj_database_url.parse(Config.DATABASE_URL, conn_max_age=600),
+    'test': dj_database_url.parse(Config.DATABASE_TEST, conn_max_age=600),
+    'local': dj_database_url.parse(Config.DATABASE_LOCAL, conn_max_age=600),
+    'live': dj_database_url.parse(Config.DATABASE_LIVE, conn_max_age=600)
 }
 
 
@@ -100,7 +102,7 @@ if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-AUTH_USER_MODEL = 'home.CustomUser'
+AUTH_USER_MODEL = 'accounts.Users'
 LOGIN_URL = '/login/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

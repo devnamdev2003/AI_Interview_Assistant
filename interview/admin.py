@@ -1,14 +1,11 @@
-# admin.py
-
 from django.contrib import admin
-from .models import ScheduleInterview, InterviewModel
+from .models import interviewModel, scheduleInterviewModel
 
-
-@admin.register(ScheduleInterview)
+@admin.register(scheduleInterviewModel.ScheduleInterview)
 class ScheduleInterviewAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'interview_completed', 'scheduled_by')
 
 
-@admin.register(InterviewModel)
+@admin.register(interviewModel.InterviewModel)
 class InterviewModelAdmin(admin.ModelAdmin):
     list_display = ('email', 'job_role')

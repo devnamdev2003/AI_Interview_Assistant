@@ -25,8 +25,8 @@ conf.py
 
 
 # Static and media files (if not managed by version control)
-staticfiles/
-media/
+# staticfiles/
+# media/
 
 # Ignore coverage and testing files
 htmlcov/

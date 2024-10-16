@@ -9,10 +9,10 @@ class Config:
     # DATABASE = os.getenv("DATABASE_LOCAL")
 
     # # for testing
-    # DATABASE = os.getenv("DATABASE_TEST")
+    DATABASE = os.getenv("DATABASE_TEST")
 
     # # for live
-    DATABASE = os.getenv("DATABASE_LIVE")
+    # DATABASE = os.getenv("DATABASE_LIVE")
 
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
     SECRET_KEY = os.getenv("SECRET_KEY")

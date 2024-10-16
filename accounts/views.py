@@ -25,7 +25,7 @@ def index(request):
 
 def user_login(request):
     if request.user.is_authenticated:
-        return redirect('accounts_index')
+        return redirect('home')
     if request.method == 'POST':
         username_email = request.POST.get('username_email')
         password = request.POST.get('password')
@@ -39,7 +39,7 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('accounts_index')
+            return redirect('home')
         else:
             if not UsersModel.Users.objects.filter(username=username_email).exists() and not UsersModel.Users.objects.filter(email=username_email).exists():
                 messages = "User does not exist"
@@ -51,7 +51,7 @@ def user_login(request):
 
 def user_register(request):
     if request.user.is_authenticated:
-        return redirect('accounts_index')
+        return redirect('home')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -84,7 +84,7 @@ def user_register(request):
                                               last_name=last_name,
                                               is_registered=True, user_type=user_type)
         login(request, user)
-        return redirect('accounts_index')
+        return redirect('home')
     else:
         message = request.GET.get('message')
         return render(request, 'accounts/register.html', {'message': message})
@@ -92,7 +92,7 @@ def user_register(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('accounts_index')
+    return redirect('home')
 
 
 @login_required

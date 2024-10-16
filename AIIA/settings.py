@@ -7,7 +7,7 @@ from config import Config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = Config.SECRET_KEY
-DEBUG = False
+DEBUG = Config.DEBUG
 
 ALLOWED_HOSTS = ['*']
 
@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'accounts',
+    'home',
 ]
 
 
@@ -93,10 +94,12 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = '/staticfiles/'
+STATIC_URL = Config.STATIC_URL
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # This tells Django to look for static files in the 'static' directory
+]
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

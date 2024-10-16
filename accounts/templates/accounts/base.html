@@ -25,15 +25,20 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'accounts/favicon_io/favicon-32x32.png' %}" />
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'accounts/favicon_io/favicon-32x32.png' %}" />
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'accounts/favicon_io/favicon-16x16.png' %}" />
-    <style>
-      button {
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    {% block content %}
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.3/css/bootstrap.min.css' %}" />
+    {% block csslink %}
 
     {% endblock %}
+  </head>
+  <body>
+    <div>
+      {% block content %}
+
+      {% endblock %}
+    </div>
+    {% block jslink %}
+
+    {% endblock %}
+    <script src="{% static 'bootstrap-5.3.3/js/bootstrap.bundle.min.js' %}"></script>
   </body>
 </html>

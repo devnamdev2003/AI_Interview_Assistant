@@ -1,0 +1,15 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block title %}
+
+{% endblock %}
+{% block csslink %}
+
+{% endblock %}
+{% block content %}
+  {% include 'accounts/component/common.html' with param='param' css_path='accounts/components/common/common.css' js_path='accounts/components/common/common.js' %}
+  <p>common</p>
+{% endblock %}
+{% block jslink %}
+
+{% endblock %}

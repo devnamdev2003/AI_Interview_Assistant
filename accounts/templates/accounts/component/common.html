@@ -1,0 +1,13 @@
+{% load static %}
+
+{% if css_path %}
+  <link rel="stylesheet" href="{% static css_path %}" />
+{% endif %}
+
+<div class="common">
+  <p>{{ param }}</p>
+</div>
+
+{% if js_path %}
+  <script src="{% static js_path %}"></script>
+{% endif %}

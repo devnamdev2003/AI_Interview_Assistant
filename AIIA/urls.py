@@ -8,8 +8,9 @@ admin.site.index_title = "Site administration"
 
 urlpatterns = [
     path('dev/', admin.site.urls),
-    path('', include('accounts.urls')),
+    path('', include('home.urls')),
+    path('accounts/', include('accounts.urls')),
     path('api/', include('api.urls')),
     path('interview/', include('interview.urls')),
-    re_path(r"^.*/$", RedirectView.as_view(pattern_name="accounts_index", permanent=False)),
+    # re_path(r"^.*/$", RedirectView.as_view(pattern_name="home", permanent=False)),
 ]

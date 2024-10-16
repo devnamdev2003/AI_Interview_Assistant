@@ -13,6 +13,7 @@ $(document).ready(function () {
     var interviewType = $("#interviewType").val();
     var experience = $("#experience").val();
 
+    // Redirect to interview details page with form data as URL parameters
     window.location.href =
       "main.html?name=" +
       encodeURIComponent(name) +

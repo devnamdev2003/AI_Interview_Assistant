@@ -1,0 +1,18 @@
+[
+    {
+        "question": "What is Excel used for?",
+        "answer": "Excel is a spreadsheet program used for data organization, analysis, and visualization."
+    },
+    {
+        "question": "Explain the difference between a workbook and a worksheet.",
+        "answer": "A workbook is a spreadsheet program file that you create in Excel. A workbook contains one or more worksheets. A worksheet consists of cells in which you can enter and calculate data. The cells are organized into columns and rows."
+    },
+    {
+        "question": "How do you navigate between worksheets in a workbook?",
+        "answer": "Use sheet tabs at the bottom of the Excel window."
+    },
+    {
+        "question": "How do you reference a cell in a formula?",
+        "answer": "Use the cell address in the formula (for example, A1)."
+    }
+]

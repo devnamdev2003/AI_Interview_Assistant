@@ -9,7 +9,7 @@ from django.urls import reverse
 class CustomPasswordResetView(auth_views.PasswordResetView):
     template_name = 'accounts/password/password_reset_form.html'
     email_template_name = 'accounts/password/password_reset_email.html'
-
+    subject_template_name = 'accounts/password/dev.txt'
     def form_valid(self, form):
         email = form.cleaned_data['email']
         if not UsersModel.Users.objects.filter(email=email).exists():

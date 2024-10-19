@@ -22,7 +22,7 @@ db.sqlite3
 # Environment variables
 .env
 conf.py
-
+z/
 
 # Static and media files (if not managed by version control)
 # staticfiles/

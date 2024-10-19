@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.urls import reverse_lazy
 import dj_database_url
 import os
@@ -86,6 +87,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 # TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -98,7 +100,7 @@ STATIC_URL = Config.STATIC_URL
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # This tells Django to look for static files in the 'static' directory
+    BASE_DIR / "static",
 ]
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -117,8 +119,38 @@ EMAIL_HOST_PASSWORD = Config.EMAIL_HOST_PASSWORD
 
 BASE_URL = reverse_lazy('interview_index')
 
-TIME_ZONE = 'Asia/Kolkata'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5500"
+    "http://127.0.0.1:5500",
+    "http://localhost:3000",
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+APPEND_SLASH = False
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ),
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'EXCEPTION_HANDLER': 'api.views.utils.custom_exception_handler',
+}
+
+
+SIMPLE_JWT = {
+    # Token will expire in 5 minutes
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    # Refresh token is valid for 1 day
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,                  # Refresh token gets rotated
+    # Blacklist old refresh token after rotation
+    'BLACKLIST_AFTER_ROTATION': True,
+}

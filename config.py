@@ -12,16 +12,18 @@ class Config:
         DATABASE_URL = os.getenv("DATABASE_LOCAL")
         DEBUG = True
         STATIC_URL = '/static/'
+        SITE_URL = 'http://localhost:8000'
     else:
         # for testing
         DATABASE_URL = os.getenv("DATABASE_TEST")
         DEBUG = False
         STATIC_URL = '/staticfiles/'
+        SITE_URL = 'http://aiia-testing.onrender.com/'
         # for live
         # DATABASE_URL = os.getenv("DATABASE_LIVE")
         # DEBUG = False
         # STATIC_URL = '/staticfiles/'
-    
+
     DATABASE_LIVE = os.getenv("DATABASE_LIVE")
     DATABASE_LOCAL = os.getenv("DATABASE_LOCAL")
     DATABASE_TEST = os.getenv("DATABASE_TEST")

@@ -1,0 +1,304 @@
+{
+    // user service schema
+    "users": {
+        "id": "int",
+        "password": "[Securely stored password]",
+        "username": "[Unique username]",
+        "first_name": "[Candidate's First Name]",
+        "last_name": "[Candidate's Last Name]",
+        "email": "[Candidate's Email Address]",
+        "status": "active || inactive",
+        "date_of_birth": "date",
+        "is_registered": "true || false",
+        "phone_number": "[Candidate's Phone Number]",
+        "gender": "male || female || other",
+        "address": "[Candidate's Address]",
+        "is_verified": "true || false",
+        "profile_picture_url": "[Path to Candidate's Profile Picture]",
+        "last_login_date": "date",
+        "time_zone": "[Candidate's Time Zone]",
+        "password_last_changed_at": "date",
+        "created_at": "date",
+        "updated_at": "date",
+        "login_attempt_count": "int",
+        "role_id": "int", // Foreign Key referencing the role table
+        "country_id": "int" // Foreign Key referencing the country table
+    },
+    "user_profiles": {
+        "id": "int",
+        "skills": "[Candidate's Skills]",
+        "languages_spoken": "[Candidate's Languages Spoken]",
+        "experience_years": "[Years of Experience]",
+        "resume_file_name": "[Path to Candidate's Resume]",
+        "summary": "[Candidate's Summary]",
+        "social_media_links": "[Candidate's Social Media Accounts]",
+        "expected_salary": "[Expected Salary]",
+        "expected_job_title": "[Expected Job Title]",
+        "preferred_location": "[Preferred Location]",
+        "certifications": "[Candidate's Certifications]",
+        "profile_completeness_percentage": "[Percentage of Profile Completeness]",
+        "education_id": "int", // Foreign Key referencing the user_education table
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "user_auth_tokens": {
+        "id": "int",
+        "auth_token": "string", // Securely stored token value (e.g., hashed or encrypted)
+        "created_at": "datetime", // Date and time the token was created (use datetime for precision)
+        "is_expired": "boolean", // Whether the token is expired
+        "last_accessed_at": "datetime", // Track when the token was last used
+        "revoked_date": "datetime", // Optional: Date when the token was revoked (if applicable)
+        "revoked_reason": "string", // Optional: Reason for token revocation (e.g., logout, suspicious activity)
+        "token_id": "int", // Foreign Key referencing the token_details table
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "token_details": {
+        "id": "int",
+        "type": "string[refresh_token, access_token, verification_token]",
+        "description": "string",
+        "expiry_time": "datetime", // Expiration time of the token (use datetime for precision)
+        "created_at": "datetime", // Date and time the token was created
+        "updated_at": "datetime", // Date and time the token was last updated (e.g., when refreshed)
+        "is_active": "boolean" // Whether the token is active or has been revoked (optional)
+    },
+    "user_educations": {
+        "institution_name": "institution name",
+        "degree_name": "degree name",
+        "field_of_study": "[Field of Study]",
+        "grade": "[Type of Grade (A, B, C, D, F)] or score",
+        "start_date": "date",
+        "end_date": "date",
+        "achievements": "[Achievements]",
+        "extra_details": "[Any additional details]",
+        "created_at": "date",
+        "updated_at": "date",
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "notification_settings": {
+        "id": "int",
+        "email_notifications_enabled": "boolean",
+        "sms_notifications_enabled": "boolean",
+        "push_notifications_enabled": "boolean",
+        "created_at": "date",
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "roles": {
+        "id": "int", // Unique identifier for the role
+        "name": "string", // Name of the role (e.g., "admin", "user", "interviewer", "candidate")
+        "description": "string", // A brief description of the role and its permissions
+        "is_active": "boolean", // Whether this role is currently active and usable
+        "created_at": "datetime", // Date and time when the role was created
+        "updated_at": "datetime" // Date and time when the role was last updated
+    },
+    "permissions": {
+        "id": "int",
+        "name": "string", // Permission type (e.g., "edit_profile", "view_reports")
+        "description": "text",
+        "permission_code": "string",
+        "created_at": "date"
+    },
+    "role_permissions": {
+        "id": "int",
+        "created_at": "date",
+        "role_id": "int", // Foreign Key referencing the role table
+        "permission_id": "int" // Foreign Key referencing the permission table
+    },
+    // interview service schema
+    "interviews": {
+        "id": "int",
+        "interview_status": "open || closed || running",
+        "created_at": "date",
+        "updated_at": "date",
+        "job_id": "int", // Foreign Key referencing the job table
+        "qa_session_id": "int", // Foreign Key referencing the QA table
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "interview_schedule": {
+        "id": "int",
+        "scheduled_date": "datetime",
+        "status": "pending || completed || rescheduled || canceled",
+        "created_at": "date",
+        "updated_at": "date",
+        "user_id": "int", // Foreign Key referencing the user table
+        "interview_model_id": "int" // Foreign Key referencing the interview_model table
+    },
+    "interview_results": {
+        "id": "int",
+        "result": "pass || fail || pending",
+        "score": "float",
+        "detailed_feedback": "text",
+        "time_spent_on_interviews": "datetime",
+        "created_at": "date",
+        "interview_model_id": "int", // Foreign Key referencing the interview_model table
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "interview_analysis": {
+        "id": "int",
+        "total_questions_answered": "int",
+        "total_interview_attempts": "int",
+        "average_score": "float",
+        "highest_score": "float",
+        "lowest_score": "float",
+        "total_time_spent": "int",
+        "average_time_per_question": "float",
+        "strengths": "text",
+        "areas_for_improvement": "text",
+        "created_at": "date",
+        "updated_at": "date",
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "interview_score_metrics": {
+        "id": "int",
+        "communication_skills_score": "float",
+        "technical_skills_score": "float",
+        "problem_solving_score": "float",
+        "leadership_skills_score": "float",
+        "created_at": "date",
+        "interview_model_id": "int", // Foreign Key referencing the interview_model table
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "user_feedback": {
+        "id": "int",
+        "feedback": "text",
+        "rating": "int",
+        "created_at": "date",
+        "interview_model_id": "int", // Foreign Key referencing the interview_model table
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    // question service schema
+    "question_answers": {
+        "id": "int",
+        "seq_number": "[Question Number]",
+        "question": "[Question]",
+        "answer": "[Answer]",
+        "question_type": "technical || behavioral || mix",
+        "question_level": "[Level of Question (easy, medium, hard)]",
+        "answer_feedback": "[Feedback]",
+        "answer_score": "[Score]",
+        "time_taken": "[Time Taken]",
+        "created_at": "date",
+        "updated_at": "date",
+        "job_id": "int", // Foreign Key referencing the job table
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    // job service schema
+    "jobs": {
+        "id": "int",
+        "role": "[Job Role]",
+        "company_name": "[Company Name]",
+        "about_company": "[About Company]",
+        "required_experience_years": "[Years of Experience Needed]",
+        "description": "[Job Description]",
+        "requirements": "[Job Requirements]",
+        "employment_type": "[Full-time || Part-time || Internship]",
+        "location": "[Location]",
+        "salary_range": "[Salary Range]",
+        "created_at": "date",
+        "updated_at": "date",
+        "job_level": "entry-level, mid-level, senior-level",
+        "industry_type": "to specify the industry the job is in (e.g., IT, Finance, Healthcare).",
+        "location_type": "(remote, on-site, hybrid).",
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    // subscription plan service schema
+    "user_subscriptions": {
+        "id": "int",
+        "subscription_start_date": "date",
+        "subscription_end_date": "date",
+        "payment_status": "[Payment Status (pending || paid)]",
+        "is_active": "true || false",
+        "created_at": "date",
+        "updated_at": "date",
+        "user_id": "int", // Foreign Key referencing the user table
+        "subscription_plan_id": "int" // Foreign Key referencing the subscription_plan table
+    },
+    "subscription_plan": {
+        "id": "int",
+        "plan_name": "[Subscription Plan Name]",
+        "plan_description": "[Description of Subscription Plan]",
+        "plan_price": "float",
+        "max_interviews_allowed": "int",
+        "plan_duration": "[Duration of Subscription Plan in months]",
+        "is_active": "[Status of Subscription Plan (active || inactive)]",
+        "created_at": "date",
+        "updated_at": "date"
+    },
+    // utility service schema
+    "activity_logs": {
+        "id": "int",
+        "created_at": "date",
+        "action_id": "int", // Foreign Key referencing the user_action table
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "user_action": {
+        "id": "int",
+        "action_type": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+    },
+    "device_details": {
+        "id": "int",
+        "device_type": "string",
+        "device_brand": "string",
+        "device_model": "string",
+        "os_type": "string",
+        "os_version": "string",
+        "browser_type": "string",
+        "browser_version": "string",
+        "ip_address": "string",
+        "location": "string",
+        "last_login_time": "datetime",
+        "device_token": "string",
+        "is_active": "boolean",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "email_notification": {
+        "id": "int",
+        "email_subject": "string",
+        "email_body": "text",
+        "email_template_name": "string",
+        "sent_at": "datetime",
+        "response_required": "boolean",
+        "delivery_status": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "notification_id": "int", // Foreign Key referencing the notification_type table
+        "user_id": "int" // Foreign Key referencing the user table
+    },
+    "notification_type": {
+        "id": "int",
+        "notification_type": "[password reset, verification, welcome message, interview invite, feedback, general notification, interview alert, Other]",
+        "description": "string",
+        "is_active": "boolean",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+    },
+    "countries": {
+        "id": "int",
+        "country_name": "[Country Name]",
+        "country_code": "[Country Code]",
+        "is_active": "true || false",
+        "created_at": "date",
+        "updated_at": "date"
+    },
+    "common_response": {
+        "id": "int",
+        "data": "object",
+        "status_code": "int",
+        "error": "boolean",
+        "message": "string",
+        "created_at": "date",
+        "source": "string",
+        "error_id": "int" // Foreign Key referencing the error table
+    },
+    "errors": {
+        "id": "int",
+        "error_name": "[error Name]",
+        "error_code": "[error Code]",
+        "description": "text",
+        "is_active": "true || false",
+        "created_at": "date",
+        "updated_at": "date"
+    }
+}

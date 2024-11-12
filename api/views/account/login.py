@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework import status
-from ..models.users import UsersModel
-from .utils import custom_response
+from models import Users, Role, Country
+from services import custom_response
 from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_400_BAD_REQUEST, HTTP_500_INTERNAL_SERVER_ERROR
 from django.core.exceptions import ValidationError
 
@@ -35,8 +35,8 @@ class LoginView(APIView):
                 )
 
             # Find user by username or email
-            user = UsersModel.Users.objects.filter(username=username_email).first() or \
-                   UsersModel.Users.objects.filter(email=username_email).first()
+            user = Users.objects.filter(username=username_email).first() or \
+                   Users.objects.filter(email=username_email).first()
 
             if user is None:
                 # Invalid username/email case

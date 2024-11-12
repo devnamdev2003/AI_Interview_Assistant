@@ -107,18 +107,19 @@ if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-AUTH_USER_MODEL = 'accounts.Users'
+AUTH_USER_MODEL = 'api.Users'
 LOGIN_URL = '/login/'
 
+# email config
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = Config.EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = Config.EMAIL_HOST_PASSWORD
-
+DEFAULT_FROM_EMAIL = 'no-reply@example.com'
+SITE_URL = Config.SITE_URL
 BASE_URL = reverse_lazy('interview_index')
-
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",

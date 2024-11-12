@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, views as auth_views
-from .models import UsersModel
+from api.models.users import UsersModel
 from django.urls import reverse
 
 
